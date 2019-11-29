@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Snake : MonoBehaviour
 {
     private Vector2Int gridPosition;
     private Vector2Int gridDirection;
+
+    public GameObject tailPrefab;
+    List<Vector2Int> tail = new List<Vector2Int>();
+    int snakebodysize = 0;
+    bool eat;
+
     private float Timer;
     private float MaxTimer;
 
@@ -13,7 +20,7 @@ public class Snake : MonoBehaviour
     {
         gridPosition = new Vector2Int(0, 0);
         gridDirection = new Vector2Int(0, -1);
-        MaxTimer = 0.75f;
+        MaxTimer = 0.3f;
         Timer = MaxTimer;
     }
 
@@ -24,8 +31,34 @@ public class Snake : MonoBehaviour
         Timer = Timer + Time.deltaTime;
         if(Timer >= MaxTimer)
         {
+            tail.Insert(0, gridPosition);
+
             gridPosition = gridPosition + gridDirection;
             Timer = Timer - MaxTimer;
+
+            if (eat)
+            {
+                Debug.Log("Eat is true");
+                snakebodysize++;
+                eat = false;
+                Debug.Log("Eat is false");
+            }
+
+            if (tail.Count >= snakebodysize + 1)
+            {
+                tail.RemoveAt(tail.Count - 1);
+            }
+
+            for(int i = 0; i < tail.Count; i++)
+            {
+                Vector2Int  tailPosition = tail[i];
+                Vector3 tp = new Vector3(tailPosition.x, tailPosition.y);
+                GameObject g = (GameObject)Instantiate(tailPrefab, tp, Quaternion.identity);
+                
+            }
+
+           
+
         }
 
         transform.position = new Vector3(gridPosition.x, gridPosition.y);
@@ -124,4 +157,18 @@ public class Snake : MonoBehaviour
     {
         transform.Rotate(Vector3.forward * 90);
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.name.StartsWith("Apple"))
+        {
+            eat = true;
+            Destroy(collision.gameObject);
+        }else
+        {
+            //Die
+        }
+    }
+
+  
 }

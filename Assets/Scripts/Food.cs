@@ -2,30 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food
+public class Food : MonoBehaviour
 {
-    private Vector2Int foodPosition;
-    private GameObject food;
-    private int h;
-    private int w;
+    public GameObject food;
 
+    public Transform topBorder;
+    public Transform bottomBorder;
+    public Transform leftBorder;
+    public Transform rightBorder;
 
-    public Food(int width, int height)
+    void SpawnFood()
     {
-        this.w = width;
-        this.h = height;
+        int x = (int)Random.Range(leftBorder.position.x, rightBorder.position.x);
+        int y = (int)Random.Range(bottomBorder.position.y, topBorder.position.y);
 
-        SpawnFood();
+        Instantiate(food, new Vector2(x, y), Quaternion.identity);
     }
 
-    private void SpawnFood()
+    void Start()
     {
-        foodPosition = new Vector2Int(Random.Range(0, w), Random.Range(0, h));
-
-        food = new GameObject("food", typeof(SpriteRenderer));
-        food.GetComponent<SpriteRenderer>().sprite = GameManger.i.foodSprite;
-        food.transform.position = new Vector2(foodPosition.x, foodPosition.y);
+        InvokeRepeating("SpawnFood", 3, 4);    
     }
-  
 }
 
