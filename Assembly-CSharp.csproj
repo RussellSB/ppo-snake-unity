@@ -62,7 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Food.cs" />
     <Compile Include="Assets\Scripts\GameHandler.cs" />
+    <Compile Include="Assets\Scripts\GameManger.cs" />
     <Compile Include="Assets\Scripts\Snake.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/USER/Desktop/Snake/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
