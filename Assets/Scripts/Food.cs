@@ -11,17 +11,20 @@ public class Food : MonoBehaviour
     public Transform leftBorder;
     public Transform rightBorder;
 
-    void SpawnFood()
+    public void SpawnFood(List<Vector2Int> list)
     {
-        int x = (int)Random.Range(leftBorder.position.x, rightBorder.position.x);
-        int y = (int)Random.Range(bottomBorder.position.y, topBorder.position.y);
+        Vector2Int element = new Vector2Int();
+        int x, y;
+
+        do
+        {
+            x = (int)Random.Range(leftBorder.position.x+1, rightBorder.position.x-1);
+            y = (int)Random.Range(bottomBorder.position.y+1, topBorder.position.y-1);
+            element.x = x;
+            element.y = y;
+        } while (list.IndexOf(element) != -1);
 
         Instantiate(food, new Vector2(x, y), Quaternion.identity);
-    }
-
-    void Start()
-    {
-        InvokeRepeating("SpawnFood", 3, 4);    
     }
 }
 

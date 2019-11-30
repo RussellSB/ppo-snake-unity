@@ -8,8 +8,12 @@ public class Snake : MonoBehaviour
     private Vector2Int gridPosition;
     private Vector2Int gridDirection;
 
+    public GameObject food;
     public GameObject tailPrefab;
+
     List<Vector2Int> tail;
+    List<Vector2Int> snakesize;
+    
     private int snakebodysize = 0;
     bool eat;
 
@@ -22,8 +26,12 @@ public class Snake : MonoBehaviour
         gridDirection = new Vector2Int(0, -1);
         MaxTimer = 0.3f;
         Timer = MaxTimer;
+
         tail = new List<Vector2Int>();
         snakebodysize = 0;
+
+        snakesize = GetFullSnake();
+        food.GetComponent<Food>().SpawnFood(snakesize);
     }
 
     // Update is called once per frame
@@ -154,6 +162,7 @@ public class Snake : MonoBehaviour
             {
                 Vector2Int snakePosition = tail[i];
                 Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
+
                 GameObject g = (GameObject)Instantiate(tailPrefab, p , Quaternion.identity);
                 Object.Destroy(g, MaxTimer);
             }
@@ -168,11 +177,23 @@ public class Snake : MonoBehaviour
         {
             eat = true;
             Destroy(collision.gameObject);
-        }else
+
+            snakesize = GetFullSnake();
+            food.GetComponent<Food>().SpawnFood(snakesize);
+
+        }
+        else
         {
-            //Die
+            Debug.Log("You die");
+            
         }
     }
 
+    public List<Vector2Int> GetFullSnake()
+    {
+        List<Vector2Int> list = new List<Vector2Int>() { gridPosition };
+        list.AddRange(tail);
+        return list;
+    }
   
 }
