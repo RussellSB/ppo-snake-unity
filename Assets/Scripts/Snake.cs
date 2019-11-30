@@ -9,8 +9,8 @@ public class Snake : MonoBehaviour
     private Vector2Int gridDirection;
 
     public GameObject tailPrefab;
-    List<Vector2Int> tail = new List<Vector2Int>();
-    int snakebodysize = 0;
+    List<Vector2Int> tail;
+    private int snakebodysize = 0;
     bool eat;
 
     private float Timer;
@@ -22,46 +22,16 @@ public class Snake : MonoBehaviour
         gridDirection = new Vector2Int(0, -1);
         MaxTimer = 0.3f;
         Timer = MaxTimer;
+        tail = new List<Vector2Int>();
+        snakebodysize = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         UserInput();
-        Timer = Timer + Time.deltaTime;
-        if(Timer >= MaxTimer)
-        {
-            tail.Insert(0, gridPosition);
-
-            gridPosition = gridPosition + gridDirection;
-            Timer = Timer - MaxTimer;
-
-            if (eat)
-            {
-                Debug.Log("Eat is true");
-                snakebodysize++;
-                eat = false;
-                Debug.Log("Eat is false");
-            }
-
-            if (tail.Count >= snakebodysize + 1)
-            {
-                tail.RemoveAt(tail.Count - 1);
-            }
-
-            for(int i = 0; i < tail.Count; i++)
-            {
-                Vector2Int  tailPosition = tail[i];
-                Vector3 tp = new Vector3(tailPosition.x, tailPosition.y);
-                GameObject g = (GameObject)Instantiate(tailPrefab, tp, Quaternion.identity);
-                
-            }
-
-           
-
-        }
-
-        transform.position = new Vector3(gridPosition.x, gridPosition.y);
+        Movement();
+        
     }
 
     private void UserInput()
@@ -156,6 +126,40 @@ public class Snake : MonoBehaviour
     private void RotateRight()
     {
         transform.Rotate(Vector3.forward * 90);
+    }
+
+    private void Movement()
+    {
+        Timer = Timer + Time.deltaTime;
+
+        if (Timer >= MaxTimer)
+        {
+            Timer = Timer - MaxTimer;
+            tail.Insert(0, gridPosition);
+
+            gridPosition = gridPosition + gridDirection;
+
+            if (eat)
+            {
+                snakebodysize++;
+                eat = false;
+            }
+
+            if (tail.Count >= snakebodysize + 1)
+            {
+                tail.RemoveAt(tail.Count - 1);
+            }
+
+            for(int i = 0; i < tail.Count; i ++)
+            {
+                Vector2Int snakePosition = tail[i];
+                Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
+                GameObject g = (GameObject)Instantiate(tailPrefab, p , Quaternion.identity);
+                Object.Destroy(g, MaxTimer);
+            }
+
+            transform.position = new Vector3(gridPosition.x, gridPosition.y);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
