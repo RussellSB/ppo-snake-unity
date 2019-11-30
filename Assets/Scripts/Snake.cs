@@ -16,6 +16,7 @@ public class Snake : MonoBehaviour
     
     private int snakebodysize = 0;
     bool eat;
+    bool dead;
 
     private float Timer;
     private float MaxTimer;
@@ -37,9 +38,11 @@ public class Snake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UserInput();
-        Movement();
-        
+        if(!dead)
+        {
+            UserInput();
+            Movement();
+        }  
     }
 
     private void UserInput()
@@ -173,7 +176,7 @@ public class Snake : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.name.StartsWith("Apple"))
+        if (collision.name.StartsWith("Apple"))
         {
             eat = true;
             Destroy(collision.gameObject);
@@ -184,9 +187,8 @@ public class Snake : MonoBehaviour
         }
         else
         {
-            Debug.Log("You die");
-            
-        }
+            dead = true;
+        }        
     }
 
     public List<Vector2Int> GetFullSnake()
