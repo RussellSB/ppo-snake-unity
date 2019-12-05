@@ -25,7 +25,7 @@ public class Snake : MonoBehaviour
     {
         gridPosition = new Vector2Int(0, 0);
         gridDirection = new Vector2Int(0, -1);
-        MaxTimer = 0.3f;
+        MaxTimer = 0.1f;
         Timer = MaxTimer;
 
         tail = new List<Vector2Int>();
