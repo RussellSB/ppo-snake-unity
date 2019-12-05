@@ -1,0 +1,3 @@
+[submodule "rl-snake"]
+	path = rl-snake
+	url = https://github.com/spranesh/rl-snake.git
