@@ -443,7 +443,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: The Torch Dragon
+  m_Text: Zhulong Rush
 --- !u!222 &315179689
 CanvasRenderer:
   m_ObjectHideFlags: 0
