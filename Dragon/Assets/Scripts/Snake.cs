@@ -180,6 +180,7 @@ public class Snake : MonoBehaviour
         {
             eat = true;
             Destroy(collision.gameObject);
+            GameController.instance.SnakeAte();
 
             snakesize = GetFullSnake();
             food.GetComponent<Food>().SpawnFood(snakesize);
@@ -188,6 +189,7 @@ public class Snake : MonoBehaviour
         else
         {
             dead = true;
+            GameController.instance.GameEnd();
         }        
     }
 
