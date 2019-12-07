@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
     public Text score;
     public GameObject gameover;
 
+    protected bool pause = false;
+
     private int s = 0;
     public bool gameOver = false;
 
@@ -22,15 +24,28 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
     }
-  
 
     void Update()
     {
         if(gameOver && Input.GetKeyUp(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            if (pause == false)
+            {
+                pause = true;
+                PauseGame();
+            }
+            else if (pause == true)
+            {
+                pause = false;
+                ContinueGame();
+            }
         }
 
     }
@@ -51,5 +66,15 @@ public class GameController : MonoBehaviour
     {
         gameover.SetActive(true);
         gameOver = true;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1;
     }
 }
