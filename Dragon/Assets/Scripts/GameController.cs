@@ -28,7 +28,11 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        //Restart when prompted
+        if(gameOver && Input.GetKeyUp(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
     }
 
     public void SnakeAte()

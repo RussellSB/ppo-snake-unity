@@ -42,7 +42,7 @@ public class Snake : MonoBehaviour
         {
             UserInput();
             Movement();
-        }  
+        }
     }
 
     private void UserInput()
