@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Food.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
+    <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\Snake.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/USER/Desktop/Snakes/Snakes/Dragon/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
