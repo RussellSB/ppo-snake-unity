@@ -38,7 +38,7 @@ public class Snake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!dead)
+        if (!dead)
         {
             UserInput();
             Movement();
@@ -47,7 +47,7 @@ public class Snake : MonoBehaviour
 
     private void UserInput()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (gridDirection.x != 0 && gridDirection.y != -1)
             {
@@ -56,7 +56,7 @@ public class Snake : MonoBehaviour
                 gridDirection.y = 1;
             }
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             if (gridDirection.x != 0 && gridDirection.y != 1)
             {
@@ -65,7 +65,7 @@ public class Snake : MonoBehaviour
                 gridDirection.y = -1;
             }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             if (gridDirection.x != -1 && gridDirection.y != 0)
             {
@@ -74,7 +74,7 @@ public class Snake : MonoBehaviour
                 gridDirection.y = 0;
             }
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             if (gridDirection.x != 1 && gridDirection.y != 0)
             {
@@ -184,7 +184,6 @@ public class Snake : MonoBehaviour
 
             snakesize = GetFullSnake();
             food.GetComponent<Food>().SpawnFood(snakesize);
-
         }
         else
         {

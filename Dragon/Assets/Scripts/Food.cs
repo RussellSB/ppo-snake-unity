@@ -30,7 +30,6 @@ public class Food : MonoBehaviour
             element.y = y;
 
             check = CheckWalls(wallpts, x, y);
-            Debug.Log(check);
 
         } while (list.IndexOf(element) != -1  | check == true);
 

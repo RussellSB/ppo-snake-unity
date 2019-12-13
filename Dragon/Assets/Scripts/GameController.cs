@@ -29,7 +29,11 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if(gameOver && Input.GetKeyUp(KeyCode.R))
+        if((gameover) && gameOver && Input.GetKeyUp(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else if ((!gameover) && gameOver)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -48,6 +52,11 @@ public class GameController : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+
     }
 
     public void SnakeAte()
@@ -64,7 +73,7 @@ public class GameController : MonoBehaviour
 
     public void GameEnd()
     {
-        gameover.SetActive(true);
+        if(gameover) gameover.SetActive(true);
         gameOver = true;
     }
 
