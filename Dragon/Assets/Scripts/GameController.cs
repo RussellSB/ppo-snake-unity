@@ -17,10 +17,10 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
-        }else if(instance != this)
+        } else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if((gameover) && gameOver && Input.GetKeyUp(KeyCode.R))
+        if ((gameover) && gameOver && Input.GetKeyUp(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -38,18 +38,9 @@ public class GameController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            if (pause == false)
-            {
-                pause = true;
-                PauseGame();
-            }
-            else if (pause == true)
-            {
-                pause = false;
-                ContinueGame();
-            }
+            Pausecontinue();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -59,9 +50,23 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void Pausecontinue()
+    {
+        if (pause == false)
+        {
+            pause = true;
+            PauseGame();
+        }
+        else if (pause == true)
+        {
+            pause = false;
+            ContinueGame();
+        }
+    }
+
     public void SnakeAte()
     {
-        if(gameOver)
+        if (gameOver)
         {
             return;
         }
@@ -73,7 +78,7 @@ public class GameController : MonoBehaviour
 
     public void GameEnd()
     {
-        if(gameover) gameover.SetActive(true);
+        if (gameover) gameover.SetActive(true);
         gameOver = true;
     }
 
@@ -86,4 +91,10 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 }
+
