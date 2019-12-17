@@ -65,7 +65,8 @@
     <Compile Include="Assets\Scripts\Food.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
-    <Compile Include="Assets\Scripts\QLAgent.cs" />
+    <Compile Include="Assets\Scripts\OldSnakeQL.cs" />
+    <Compile Include="Assets\Scripts\QLSnake.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\Snake.cs" />
     <Compile Include="Assets\Scripts\SnakeAIController.cs" />
