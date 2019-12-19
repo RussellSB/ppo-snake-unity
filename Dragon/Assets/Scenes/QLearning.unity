@@ -216,6 +216,10 @@ MonoBehaviour:
   food: {fileID: 488386002}
   tailPrefab: {fileID: 854037969978522545, guid: 70a0ace032df9a946b8a57c618e351a4,
     type: 3}
+  topBorder: {fileID: 354712982}
+  bottomBorder: {fileID: 1696461953}
+  leftBorder: {fileID: 424533197}
+  rightBorder: {fileID: 495817321}
 --- !u!1001 &169774113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -568,6 +572,12 @@ PrefabInstance:
       propertyPath: wall
       value: 
       objectReference: {fileID: 169774114}
+    - target: {fileID: 8664378237043738143, guid: 71f03c0be6a18a148a0b3b21c8f7594a,
+        type: 3}
+      propertyPath: food
+      value: 
+      objectReference: {fileID: 5261442182308492319, guid: eaf14193e5c8dd4409ace29751975f9c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71f03c0be6a18a148a0b3b21c8f7594a, type: 3}
 --- !u!1 &488386002 stripped

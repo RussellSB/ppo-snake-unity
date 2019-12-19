@@ -66,11 +66,11 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\OldSnakeQL.cs" />
-    <Compile Include="Assets\Scripts\QLSnake.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\Snake.cs" />
     <Compile Include="Assets\Scripts\SnakeAIController.cs" />
     <Compile Include="Assets\Scripts\SnakeAStarAI.cs" />
+    <Compile Include="Assets\Scripts\SnakeQL.cs" />
     <Compile Include="Assets\UpdateGraph.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/USER/Desktop/Snakes/Snakes/Dragon/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SnakeQL : MonoBehaviour
+public class OldSnakeQL : MonoBehaviour
 {
     private Vector2Int gridPosition;
     private Vector2Int gridDirection;

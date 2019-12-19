@@ -282,7 +282,7 @@ public class Snake : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name.StartsWith("Apple"))
+        if (collision.name.StartsWith("Fireball"))
         {
             eat = true;
             Destroy(collision.gameObject);
