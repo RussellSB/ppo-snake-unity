@@ -23,6 +23,7 @@ public class Snake : MonoBehaviour
 
     private float Timer;
     private float MaxTimer;
+    private float  ExecutionTimer;
 
     private void Awake()
     {
@@ -30,6 +31,8 @@ public class Snake : MonoBehaviour
         gridDirection = new Vector2Int(0, -1);
         MaxTimer = 0.1f;
         Timer = MaxTimer;
+        ExecutionTimer = 0;
+
 
         tail = new List<Vector2Int>();
         tailRotation = new List<int>();
@@ -42,11 +45,16 @@ public class Snake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!dead)
+        ExecutionTimer = ExecutionTimer + Time.deltaTime;
+
+        if(ExecutionTimer > MaxTimer)
         {
-            UserInput();
-            Movement();
-        }
+            if (!dead)
+            {
+                UserInput();
+                Movement();
+            }
+        }    
     }
 
     private void UserInput()

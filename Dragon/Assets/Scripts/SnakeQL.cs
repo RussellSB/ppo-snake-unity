@@ -61,12 +61,15 @@ public class SnakeQL : MonoBehaviour
 
         snakesize = GetFullSnake();
         food.GetComponent<Food>().SpawnFood(snakesize);
-
     }
 
-    void Update()
+    private void Start()
     {
+        InvokeRepeating("snakeUpdate", 0f, 0.00009f);
+    }
 
+    void snakeUpdate()
+    {
         if (!dead)
         {
             current_state = State();
@@ -74,9 +77,20 @@ public class SnakeQL : MonoBehaviour
             Movement(action);
             Movement();
             next_state = State();
-           
+
             UpdateTable(action, current_state, next_state);
-            reward = 0;
+
+            if(gridPosition.x > rightBorder.transform.position.x || gridPosition.x < leftBorder.transform.position.x)
+            {
+                dead = true;
+            }
+
+            if (gridPosition.y > topBorder.transform.position.y || gridPosition.y < bottomBorder.transform.position.y)
+            {
+                dead = true;
+            }
+
+
         }
         else
         {
@@ -88,8 +102,8 @@ public class SnakeQL : MonoBehaviour
             MaxTimer = 0.1f;
             Timer = MaxTimer;
 
-            tail = new List<Vector2Int>();
-            tailRotation = new List<int>();
+            tail.Clear();
+            tailRotation.Clear();
             snakebodysize = 0;
             iteration += 1;
             Debug.Log(iteration);
@@ -97,9 +111,9 @@ public class SnakeQL : MonoBehaviour
             UpdateEpilson();
             dead = false;
         }
-
     }
 
+   
     public string State()
     {
         float f = GameObject.FindGameObjectWithTag("Food").transform.position.x;
@@ -492,24 +506,29 @@ public class SnakeQL : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name.StartsWith("Apple"))
+        if (collision.tag.Equals("Food"))
         {
             eat = true;
             Destroy(collision.gameObject);
-            GameController.instance.SnakeAte();
-            reward = 100;
-            snakesize = GetFullSnake();
             food.GetComponent<Food>().SpawnFood(snakesize);
+            GameController.instance.SnakeAte();
+            reward = reward + 1000;
+            snakesize = GetFullSnake();
         }
         else if(collision.tag.Equals("Border"))
         {
             dead = true;
-            reward = -25;
+            reward = reward -25;
+            UpdateTable(action, current_state, next_state);
+            reward = 0;
+            Destroy(GameObject.FindGameObjectWithTag("Food"));
+            food.GetComponent<Food>().SpawnFood(snakesize);
+
         }
         else
         {
             dead = true;
-            reward = -25;
+            reward = reward-25;
             UpdateTable(action, current_state, next_state);
             reward = 0;
         }

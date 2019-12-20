@@ -21,7 +21,8 @@ public class SnakeAIController : MonoBehaviour
 
     private float Timer;
     private float MaxTimer;
-    
+    private float ExecutionTimer;
+
     public bool isUp = false;
     public bool isDown = true;
     public bool isLeft = false;
@@ -32,7 +33,6 @@ public class SnakeAIController : MonoBehaviour
 
     private void Awake()
     {
-
         gridPosition = new Vector2Int(0, 0);
         gridDirection = new Vector2Int(0, -1);
         MaxTimer = 0.1f;
@@ -46,8 +46,12 @@ public class SnakeAIController : MonoBehaviour
         food.GetComponent<Food>().SpawnFood(snakesize);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Start()
+    {
+        InvokeRepeating("snakeUpdate", 0f, 0.1f);
+    }
+
+    void snakeUpdate()
     {
         if (!dead)
         {
@@ -56,9 +60,13 @@ public class SnakeAIController : MonoBehaviour
         }
     }
 
-    private void UserInput()
+    // Update is called once per frame
+    void Update()
     {
-        
+    }
+
+    private void UserInput()
+    {    
         if (isUp)
         {
             if (gridDirection.x != 0 && gridDirection.y != -1)
@@ -153,11 +161,12 @@ public class SnakeAIController : MonoBehaviour
 
     private void Movement()
     {
-        Timer = Timer + Time.deltaTime;
+        //Timer = Timer + Time.deltaTime;
+        //UserInput();
 
-        if (Timer >= MaxTimer)
-        {
-            Timer = Timer - MaxTimer;
+        //if (Timer >= MaxTimer)
+        //{
+            //Timer = Timer - MaxTimer;
             tail.Insert(0, gridPosition);
 
             headRotationCode_PREV = headRotationCode;
@@ -263,7 +272,7 @@ public class SnakeAIController : MonoBehaviour
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
             AstarPath.active.Scan(); //Update scan
-        }
+        //}
     }
 
     int calcCurrHeadRotationCode()
