@@ -8,11 +8,17 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance;
     public Text score;
+    public Text singleScore;
+    public Text iteration;
+
     public GameObject gameover;
 
     protected bool pause = false;
 
     private int s = 0;
+    private int s1 = 0;
+    private int i = 0;
+
     public bool gameOver = false;
 
     void Awake()
@@ -74,6 +80,26 @@ public class GameController : MonoBehaviour
         s = s + 1;
         score.text = "Score: " + s.ToString();
 
+    }
+
+    public void SingleGame(bool c)
+    {
+       if(c)
+        {
+            s1 = s1 + 1;
+            singleScore.text = "Score for Game: " + s1.ToString();
+        }else
+        {
+            s1 = 0;
+            singleScore.text = "Score for Game: 0";
+
+        }
+    }
+
+    public void Iteration()
+    {
+        i = i + 1;
+        iteration.text = "Iteration: " + i.ToString();
     }
 
     public void GameEnd()

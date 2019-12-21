@@ -31,28 +31,25 @@ public class SnakeQL : MonoBehaviour
 
     Dictionary<string, float[]> qtable = new Dictionary<string, float[]>();
 
-    float learning_rate = 0.9f;
-    float discount = 0.75f;
-    float epilson_rate = 950;
+    float learning_rate = 0.85f;
+    float discount = 0.9f;
+    float epilson_rate = 1950;
 
     int reward;
-    int iteration;
 
     string current_state;
     int action;
     string next_state;
 
-
     private void Awake()
     {
-       
         int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
         int y = (int)Random.Range(bottomBorder.position.y + 1, topBorder.position.y - 1);
 
         gridPosition = new Vector2Int(x, y);
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.1f;
+        MaxTimer = 0.001f;
         Timer = MaxTimer;
 
         tail = new List<Vector2Int>();
@@ -65,7 +62,7 @@ public class SnakeQL : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("snakeUpdate", 0f, 0.00009f);
+        InvokeRepeating("snakeUpdate", 0f, MaxTimer);
     }
 
     void snakeUpdate()
@@ -92,23 +89,28 @@ public class SnakeQL : MonoBehaviour
 
 
         }
-        else
+        else if(dead == true)
         {
             int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
             int y = (int)Random.Range(bottomBorder.position.y + 1, topBorder.position.y - 1);
 
             gridPosition = new Vector2Int(x, y);
             gridDirection = new Vector2Int(0, -1);
-            MaxTimer = 0.1f;
-            Timer = MaxTimer;
 
             tail.Clear();
             tailRotation.Clear();
             snakebodysize = 0;
-            iteration += 1;
-            Debug.Log(iteration);
-            snakesize = GetFullSnake();
+
+            GameController.instance.Iteration();
+
             UpdateEpilson();
+
+            GameObject[] fd = GameObject.FindGameObjectsWithTag("Food");
+            foreach (GameObject fb in fd)
+                GameObject.Destroy(fb);
+
+            food.GetComponent<Food>().SpawnFood(snakesize);
+
             dead = false;
         }
     }
@@ -185,14 +187,10 @@ public class SnakeQL : MonoBehaviour
         if(f < s)
         {
             dify = -dify;
-            Debug.Log(dify);
         }
 
         string state = dif + ", " + dify;
-        if (dif == 0)
-        {
-            reward = reward + 1;
-        } else if (dify == 0)
+        if (dif == 0 && dif == 1)
         {
             reward = reward + 1;
         }
@@ -215,13 +213,13 @@ public class SnakeQL : MonoBehaviour
             float[] actions = { 0, 0, 0, 0 };
             qtable.Add(state, actions);
         }
-            
+
     }
 
     public int GetAction(string state)
     {
         System.Random rnd = new System.Random();
-        float num = rnd.Next(0, 1001);
+        float num = rnd.Next(0, 2001);
 
         if (num < epilson_rate || !qtable.ContainsKey(state))
         {
@@ -253,7 +251,7 @@ public class SnakeQL : MonoBehaviour
 
     public void UpdateEpilson()
     {
-        if(epilson_rate > 10)
+        if(epilson_rate > 20)
         {
             epilson_rate = epilson_rate - 1;
 
@@ -264,9 +262,8 @@ public class SnakeQL : MonoBehaviour
     {
         NewRow(state);
         NewRow(nextstate);
-        float update = qtable[state][action] + learning_rate * (reward + (discount * (Mathf.Max(qtable[nextstate][0], qtable[nextstate][1], qtable[nextstate][2], qtable[nextstate][3]))) - qtable[state][action]);
-        qtable[state][action] = update;
-        reward = 0;
+        float newValue = reward + discount * Mathf.Max(qtable[nextstate][0], qtable[nextstate][1], qtable[nextstate][2], qtable[nextstate][3]) - qtable[state][action];
+        qtable[state][action] = qtable[state][action] + learning_rate * newValue;
     }
 
     private void Movement(int action)
@@ -419,57 +416,44 @@ public class SnakeQL : MonoBehaviour
                 switch (rotation)
                 {
                     case 0:
-                        Debug.Log("Up");
                         break;
                     case 1:
-                        Debug.Log("Down");
                         break;
                     case 2:
-                        Debug.Log("Right");
                         g.GetComponent<Transform>().Rotate(Vector3.forward * 90);
                         break;
                     case 3:
-                        Debug.Log("Left");
                         g.GetComponent<Transform>().Rotate(Vector3.forward * -90);
                         break;
                     case 4:
-                        Debug.Log("Upright");
                         childStraight.SetActive(false);
                         childCorner3.SetActive(true);
                         break;
                     case 5:
-                        Debug.Log("Upleft");
                         childStraight.SetActive(false);
                         childCorner4.SetActive(true);
                         break;
                     case 6:
-                        Debug.Log("Downright");
                         childStraight.SetActive(false);
                         childCorner1.SetActive(true);
                         break;
                     case 7:
-                        Debug.Log("Downleft");
                         childStraight.SetActive(false);
                         childCorner2.SetActive(true);
                         break;
                     case 8:
-                        Debug.Log("Rightup");
                         childStraight.SetActive(false);
                         childCorner2.SetActive(true);
                         break;
                     case 9:
-                        Debug.Log("Rightdown");
                         childStraight.SetActive(false);
                         childCorner4.SetActive(true);
                         break;
                     case 10:
-                        Debug.Log("Leftup");
                         childStraight.SetActive(false);
                         childCorner1.SetActive(true);
-                        //
                         break;
                     case 11:
-                        Debug.Log("Leftdown");
                         childStraight.SetActive(false);
                         childCorner3.SetActive(true);
                         break;
@@ -506,31 +490,22 @@ public class SnakeQL : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag.Equals("Food"))
+        if (collision.gameObject.tag == "Food")
         {
             eat = true;
+            reward = reward + 100;
+            Debug.Log("Ate apple");
             Destroy(collision.gameObject);
             food.GetComponent<Food>().SpawnFood(snakesize);
             GameController.instance.SnakeAte();
-            reward = reward + 1000;
-            snakesize = GetFullSnake();
-        }
-        else if(collision.tag.Equals("Border"))
-        {
-            dead = true;
-            reward = reward -25;
-            UpdateTable(action, current_state, next_state);
-            reward = 0;
-            Destroy(GameObject.FindGameObjectWithTag("Food"));
-            food.GetComponent<Food>().SpawnFood(snakesize);
-
+            GameController.instance.SingleGame(true);
         }
         else
         {
             dead = true;
             reward = reward-25;
-            UpdateTable(action, current_state, next_state);
-            reward = 0;
+            GameController.instance.SingleGame(false);
+
         }
     }
 
