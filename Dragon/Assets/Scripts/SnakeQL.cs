@@ -190,13 +190,14 @@ public class SnakeQL : MonoBehaviour
         }
 
         string state = dif + ", " + dify;
-        if (dif == 0 && dif == 1)
+
+        if (dif == 0 && dify == 0)
         {
-            reward = reward + 1;
+            //Reward given on collision
         }
         else
         {
-            reward = reward - 1;
+            reward = reward - 5;
         }
 
         return state;
