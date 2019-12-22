@@ -25,6 +25,8 @@ public class Snake : MonoBehaviour
     private float MaxTimer;
     private float  ExecutionTimer;
 
+    bool canRotate = true;
+
     private void Awake()
     {
         gridPosition = new Vector2Int(0, 0);
@@ -51,7 +53,11 @@ public class Snake : MonoBehaviour
         {
             if (!dead)
             {
-                UserInput();
+                if (canRotate)
+                {
+                    UserInput();
+                }
+                
                 Movement();
             }
         }    
@@ -67,6 +73,7 @@ public class Snake : MonoBehaviour
                 gridDirection.x = 0;
                 gridDirection.y = 1;
             }
+            canRotate = false;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
@@ -76,6 +83,7 @@ public class Snake : MonoBehaviour
                 gridDirection.x = 0;
                 gridDirection.y = -1;
             }
+            canRotate = false;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
@@ -85,6 +93,7 @@ public class Snake : MonoBehaviour
                 gridDirection.x = 1;
                 gridDirection.y = 0;
             }
+            canRotate = false;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
@@ -94,6 +103,7 @@ public class Snake : MonoBehaviour
                 gridDirection.x = -1;
                 gridDirection.y = 0;
             }
+            canRotate = false;
         }
     }
 
@@ -203,57 +213,56 @@ public class Snake : MonoBehaviour
                 switch (rotation)
                 {
                     case 0:
-                        Debug.Log("Up");
+                        //Debug.Log("Up");
                         break;
                     case 1:
-                        Debug.Log("Down");
+                        //Debug.Log("Down");
                         break;
                     case 2:
-                        Debug.Log("Right");
+                        //Debug.Log("Right");
                         g.GetComponent<Transform>().Rotate(Vector3.forward * 90);
                         break;
                     case 3:
-                        Debug.Log("Left");
+                        //Debug.Log("Left");
                         g.GetComponent<Transform>().Rotate(Vector3.forward * -90);
                         break;
                     case 4:
-                        Debug.Log("Upright");
+                        //Debug.Log("Upright");
                         childStraight.SetActive(false);
                         childCorner3.SetActive(true);
                         break;
                     case 5:
-                        Debug.Log("Upleft");
+                        //Debug.Log("Upleft");
                         childStraight.SetActive(false);
                         childCorner4.SetActive(true);
                         break;
                     case 6:
-                        Debug.Log("Downright");
+                        //Debug.Log("Downright");
                         childStraight.SetActive(false);
                         childCorner1.SetActive(true);
                         break;
                     case 7:
-                        Debug.Log("Downleft");
+                        //Debug.Log("Downleft");
                         childStraight.SetActive(false);
                         childCorner2.SetActive(true);
                         break;
                     case 8:
-                        Debug.Log("Rightup");
+                        //Debug.Log("Rightup");
                         childStraight.SetActive(false);
                         childCorner2.SetActive(true);
                         break;
                     case 9:
-                        Debug.Log("Rightdown");
+                        //Debug.Log("Rightdown");
                         childStraight.SetActive(false);
                         childCorner4.SetActive(true);
                         break;
                     case 10:
-                        Debug.Log("Leftup");
+                        //Debug.Log("Leftup");
                         childStraight.SetActive(false);
                         childCorner1.SetActive(true);
-                        //
                         break;
                     case 11:
-                        Debug.Log("Leftdown");
+                        //Debug.Log("Leftdown");
                         childStraight.SetActive(false);
                         childCorner3.SetActive(true);
                         break;
@@ -263,6 +272,7 @@ public class Snake : MonoBehaviour
             }
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
+            canRotate = true;
         }
     }
 

@@ -5,15 +5,15 @@ using System.Linq;
 
 public class SnakeAIController : MonoBehaviour
 {
-    private Vector2Int gridPosition;
-    private Vector2Int gridDirection;
+    private Vector2 gridPosition;
+    private Vector2 gridDirection;
 
     public GameObject food;
     public GameObject tailPrefab;
 
-    List<Vector2Int> tail;
+    List<Vector2> tail;
     List<int> tailRotation; //Used in congruence to tail (0 - down, 1 - left, 2 - right, 3 - up)
-    List<Vector2Int> snakesize;
+    List<Vector2> snakesize;
     
     private int snakebodysize = 0;
     bool eat;
@@ -33,17 +33,17 @@ public class SnakeAIController : MonoBehaviour
 
     private void Awake()
     {
-        gridPosition = new Vector2Int(0, 0);
-        gridDirection = new Vector2Int(0, -1);
+        gridPosition = new Vector2(0, 0);
+        gridDirection = new Vector2(0, -1);
         MaxTimer = 0.1f;
         Timer = MaxTimer;
 
-        tail = new List<Vector2Int>();
+        tail = new List<Vector2>();
         tailRotation = new List<int>();
         snakebodysize = 0;
 
         snakesize = GetFullSnake();
-        food.GetComponent<Food>().SpawnFood(snakesize);
+        //food.GetComponent<Food>().SpawnFood(snakesize);
     }
 
     private void Start()
@@ -197,7 +197,7 @@ public class SnakeAIController : MonoBehaviour
 
             for (int i = 0; i < tail.Count; i++)
             {
-                Vector2Int snakePosition = tail[i];
+                Vector2 snakePosition = tail[i];
                 int rotation = tailRotation[i];
                 Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
 
@@ -306,7 +306,7 @@ public class SnakeAIController : MonoBehaviour
             GameController.instance.SnakeAte();
 
             snakesize = GetFullSnake();
-            food.GetComponent<Food>().SpawnFood(snakesize);
+            //food.GetComponent<Food>().SpawnFood(snakesize);
 
         }
         else
@@ -316,9 +316,9 @@ public class SnakeAIController : MonoBehaviour
         }        
     }
 
-    public List<Vector2Int> GetFullSnake()
+    public List<Vector2> GetFullSnake()
     {
-        List<Vector2Int> list = new List<Vector2Int>() { gridPosition };
+        List<Vector2> list = new List<Vector2>() { gridPosition };
         list.AddRange(tail);
         return list;
     }

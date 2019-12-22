@@ -28,6 +28,7 @@ public class SnakeQL : MonoBehaviour
 
     private float Timer;
     private float MaxTimer;
+    private float ExecutionTimer;
 
     Dictionary<string, float[]> qtable = new Dictionary<string, float[]>();
 
@@ -41,6 +42,8 @@ public class SnakeQL : MonoBehaviour
     int action;
     string next_state;
 
+    bool canRotate = true;
+
     private void Awake()
     {
         int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
@@ -49,8 +52,9 @@ public class SnakeQL : MonoBehaviour
         gridPosition = new Vector2Int(x, y);
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.001f;
+        MaxTimer = 1f;
         Timer = MaxTimer;
+        ExecutionTimer = 0f;
 
         tail = new List<Vector2Int>();
         tailRotation = new List<int>();
@@ -60,58 +64,65 @@ public class SnakeQL : MonoBehaviour
         food.GetComponent<Food>().SpawnFood(snakesize);
     }
 
-    private void Start()
+    // Update is called once per frame
+    void Update()
     {
-        InvokeRepeating("snakeUpdate", 0f, MaxTimer);
-    }
+        ExecutionTimer = ExecutionTimer + Time.deltaTime;
 
-    void snakeUpdate()
-    {
-        if (!dead)
+        if (ExecutionTimer > MaxTimer)
         {
-            current_state = State();
-            action = GetAction(current_state);
-            Movement(action);
-            Movement();
-            next_state = State();
-
-            UpdateTable(action, current_state, next_state);
-
-            if(gridPosition.x > rightBorder.transform.position.x || gridPosition.x < leftBorder.transform.position.x)
+            if (!dead)
             {
-                dead = true;
-            }
+                current_state = State();
+                
+                if (canRotate)
+                {
+                    action = GetAction(current_state);
+                    Movement(action);
+                }
+                
+                Movement();
+                next_state = State();
 
-            if (gridPosition.y > topBorder.transform.position.y || gridPosition.y < bottomBorder.transform.position.y)
+                UpdateTable(action, current_state, next_state);
+
+                if (gridPosition.x > rightBorder.transform.position.x || gridPosition.x < leftBorder.transform.position.x)
+                {
+                    dead = true;
+                }
+
+                if (gridPosition.y > topBorder.transform.position.y || gridPosition.y < bottomBorder.transform.position.y)
+                {
+                    dead = true;
+                }
+
+
+            }
+            else if (dead == true)
             {
-                dead = true;
+                int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
+                int y = (int)Random.Range(bottomBorder.position.y + 1, topBorder.position.y - 1);
+
+                gridPosition = new Vector2Int(x, y);
+                gridDirection = new Vector2Int(0, -1);
+
+                tail.Clear();
+                tailRotation.Clear();
+                snakebodysize = 0;
+
+                GameController.instance.Iteration();
+
+                UpdateEpilson();
+
+                GameObject[] fd = GameObject.FindGameObjectsWithTag("Food");
+                foreach (GameObject fb in fd)
+                    GameObject.Destroy(fb);
+
+                food.GetComponent<Food>().SpawnFood(snakesize);
+
+                dead = false;
             }
-
-
-        }
-        else if(dead == true)
-        {
-            int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
-            int y = (int)Random.Range(bottomBorder.position.y + 1, topBorder.position.y - 1);
-
-            gridPosition = new Vector2Int(x, y);
-            gridDirection = new Vector2Int(0, -1);
-
-            tail.Clear();
-            tailRotation.Clear();
-            snakebodysize = 0;
-
-            GameController.instance.Iteration();
-
-            UpdateEpilson();
-
-            GameObject[] fd = GameObject.FindGameObjectsWithTag("Food");
-            foreach (GameObject fb in fd)
-                GameObject.Destroy(fb);
-
-            food.GetComponent<Food>().SpawnFood(snakesize);
-
-            dead = false;
+            
         }
     }
 
@@ -277,6 +288,7 @@ public class SnakeQL : MonoBehaviour
                 gridDirection.x = 0;
                 gridDirection.y = 1;
             }
+            canRotate = false;
         }
         if (action == 1)
         {
@@ -286,6 +298,7 @@ public class SnakeQL : MonoBehaviour
                 gridDirection.x = 0;
                 gridDirection.y = -1;
             }
+            canRotate = false;
         }
         if (action == 2)
         {
@@ -295,6 +308,7 @@ public class SnakeQL : MonoBehaviour
                 gridDirection.x = 1;
                 gridDirection.y = 0;
             }
+            canRotate = false;
         }
         if (action == 3)
         {
@@ -304,6 +318,7 @@ public class SnakeQL : MonoBehaviour
                 gridDirection.x = -1;
                 gridDirection.y = 0;
             }
+            canRotate = false;
         }
     }
 
@@ -464,6 +479,7 @@ public class SnakeQL : MonoBehaviour
             }
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
+            canRotate = true;
         }
     }
 
