@@ -1,0 +1,35 @@
+PPO was firstly tried out with -500 reward on collision and +100 reward on eating.
+
+The observations noted were through vector observations:
+
+- Border top y-axes
+- Border bottom y-axis
+- Border left x-axis
+- Border right x-axis
+
+- Food position
+- Head position
+
+- Direction y-axis
+- Direction x-axis
+- Snake length
+
+=========================================================
+Doesn't really learn :( thought it was epochs but actually got worse..........
+Unsure if its the observations, the decision intervals or the algorithm itself hmmm
+=========================================================
+
+Note that this was firstly tested out with -1 for collision, +1 for eating, though the snake simulated learning a strategy, its strategy was too focused on avoiding the walls and so it would spend most of its time avoiding the walls and not really going for the food.
+
+Ideas for improvements:
+1) Different observations: 
+	- CNN observations could be consice method of representation for the snake, where
+		values and types don't have to be worried about.
+	- Raycast observations could be a less expensive way to capture info, while still 
+		detecting body parts as well as approaching walls.
+
+2) Curriculum training:
+	- First lesson: avoid the obstacle
+	- Second lesson: get the food
+	This could work well to balance both conservative and greedy behaviour. With raycasting for example
+	the snake can take on avoidance when the obstacle is detected in front of it, then take on 	collecting when there is no food infront of it. How this would work entirely with CNN and vector 	observations though? Not entirely sure.

@@ -46,25 +46,37 @@ public class SnakeQL : MonoBehaviour
 
     private void Awake()
     {
+        SnakeInit();
+    }
+
+    private void SnakeInit()
+    {
         int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
         int y = (int)Random.Range(bottomBorder.position.y + 1, topBorder.position.y - 1);
 
         gridPosition = new Vector2Int(x, y);
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 1f;
+        MaxTimer = 0.1f;
         Timer = MaxTimer;
-        ExecutionTimer = 0f;
+        ExecutionTimer = 0;
 
         tail = new List<Vector2Int>();
         tailRotation = new List<int>();
         snakebodysize = 0;
 
         snakesize = GetFullSnake();
-        food.GetComponent<Food>().SpawnFood(snakesize);
+
+        GameObject[] fd = GameObject.FindGameObjectsWithTag("Food");
+        foreach (GameObject fb in fd)
+            GameObject.Destroy(fb);
+
+        food.GetComponent<FoodQL>().SpawnFood(snakesize);
+
+        canRotate = true;
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         ExecutionTimer = ExecutionTimer + Time.deltaTime;
@@ -73,15 +85,15 @@ public class SnakeQL : MonoBehaviour
         {
             if (!dead)
             {
-                current_state = State();
-                
                 if (canRotate)
                 {
+                    current_state = State();
                     action = GetAction(current_state);
-                    Movement(action);
+                    AIInput(action);
                 }
-                
+
                 Movement();
+
                 next_state = State();
 
                 UpdateTable(action, current_state, next_state);
@@ -98,42 +110,38 @@ public class SnakeQL : MonoBehaviour
 
 
             }
+
             else if (dead == true)
             {
-                int x = (int)Random.Range(leftBorder.position.x + 1, rightBorder.position.x - 1);
-                int y = (int)Random.Range(bottomBorder.position.y + 1, topBorder.position.y - 1);
-
-                gridPosition = new Vector2Int(x, y);
-                gridDirection = new Vector2Int(0, -1);
-
-                tail.Clear();
-                tailRotation.Clear();
-                snakebodysize = 0;
-
+                SnakeInit();
                 GameController.instance.Iteration();
-
                 UpdateEpilson();
-
-                GameObject[] fd = GameObject.FindGameObjectsWithTag("Food");
-                foreach (GameObject fb in fd)
-                    GameObject.Destroy(fb);
-
-                food.GetComponent<Food>().SpawnFood(snakesize);
-
                 dead = false;
             }
-            
         }
     }
 
-   
+    private float GetAngleFromVector(Vector2Int dir)
+    {
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0)
+        {
+            n += 360;
+        }
+
+        return n;
+    }
+
     public string State()
     {
         float f = GameObject.FindGameObjectWithTag("Food").transform.position.x;
         float s = gridPosition.x;
         float dif, dify;
 
-        if(f < 0 && s < 0)
+        Debug.Log("Food: " + GameObject.FindGameObjectWithTag("Food").transform.position.x + "," + GameObject.FindGameObjectWithTag("Food").transform.position.y);
+        Debug.Log("Snake: " + gridPosition.x + "," + gridPosition.y);
+
+        if (f < 0 && s < 0)
         {
             dif = f - s;
             if (dif < 0)
@@ -146,11 +154,13 @@ public class SnakeQL : MonoBehaviour
             if (f < 0)
             {
                 dif = Mathf.Abs(f) + s;
-            } else
+            }
+            else
             {
                 dif = Mathf.Abs(s) + f;
             }
-        } else
+        }
+        else
         {
             dif = f - s;
             if (dif < 0)
@@ -159,7 +169,7 @@ public class SnakeQL : MonoBehaviour
             }
         }
 
-        if(f < s)
+        if (f < s)
         {
             dif = -dif;
         }
@@ -167,7 +177,7 @@ public class SnakeQL : MonoBehaviour
         f = GameObject.FindGameObjectWithTag("Food").transform.position.y;
         s = gridPosition.y;
 
-        if(f < 0 && s < 0)
+        if (f < 0 && s < 0)
         {
             dify = f - s;
             if (dify < 0)
@@ -191,11 +201,11 @@ public class SnakeQL : MonoBehaviour
             dify = f - s;
             if (dify < 0)
             {
-                dify = Mathf.Abs(dif);
+                dify = Mathf.Abs(dify);
             }
         }
 
-        if(f < s)
+        if (f < s)
         {
             dify = -dify;
         }
@@ -210,6 +220,9 @@ public class SnakeQL : MonoBehaviour
         {
             reward = reward - 5;
         }
+
+        Debug.Log("State: " + state);
+
 
         return state;
     }
@@ -263,7 +276,7 @@ public class SnakeQL : MonoBehaviour
 
     public void UpdateEpilson()
     {
-        if(epilson_rate > 20)
+        if (epilson_rate > 20)
         {
             epilson_rate = epilson_rate - 1;
 
@@ -278,107 +291,48 @@ public class SnakeQL : MonoBehaviour
         qtable[state][action] = qtable[state][action] + learning_rate * newValue;
     }
 
-    private void Movement(int action)
+    private void AIInput(int action)
     {
-        if (action == 0)
+        if (action == 0)                //Action 0 defined as up
         {
             if (gridDirection.x != 0 && gridDirection.y != -1)
             {
-                SpriteRotation(0);
                 gridDirection.x = 0;
                 gridDirection.y = 1;
             }
             canRotate = false;
         }
-        if (action == 1)
+        if (action == 1)                //Action 1 defined as down
         {
             if (gridDirection.x != 0 && gridDirection.y != 1)
             {
-                SpriteRotation(1);
                 gridDirection.x = 0;
                 gridDirection.y = -1;
             }
+
             canRotate = false;
         }
-        if (action == 2)
+        if (action == 2)                //Action 2 defined as right
         {
             if (gridDirection.x != -1 && gridDirection.y != 0)
             {
-                SpriteRotation(2);
                 gridDirection.x = 1;
                 gridDirection.y = 0;
             }
+
             canRotate = false;
         }
-        if (action == 3)
+        if (action == 3)                // Action 3 defined as left
         {
             if (gridDirection.x != 1 && gridDirection.y != 0)
             {
-                SpriteRotation(3);
                 gridDirection.x = -1;
                 gridDirection.y = 0;
             }
+
             canRotate = false;
         }
-    }
 
-    private void SpriteRotation(int r)
-    {
-        if (r == 0)
-        {
-            if (gridDirection.x == 1)
-            {
-                RotateRight();
-            }
-            else if (gridDirection.x == -1)
-            {
-                RotateLeft();
-            }
-        }
-        else if (r == 1)
-        {
-            if (gridDirection.x == 1)
-            {
-                RotateLeft();
-            }
-            else if (gridDirection.x == -1)
-            {
-                RotateRight();
-            }
-        }
-        else if (r == 2)
-        {
-            if (gridDirection.y == 1)
-            {
-                RotateLeft();
-            }
-            else if (gridDirection.y == -1)
-            {
-                RotateRight();
-            }
-        }
-        else
-        {
-            if (gridDirection.y == 1)
-            {
-                RotateRight();
-            }
-            else if (gridDirection.y == -1)
-            {
-                RotateLeft();
-            }
-        }
-    }
-
-    private void RotateLeft()
-    {
-        transform.Rotate(Vector3.forward * -90);
-
-    }
-
-    private void RotateRight()
-    {
-        transform.Rotate(Vector3.forward * 90);
     }
 
     private void Movement()
@@ -478,8 +432,12 @@ public class SnakeQL : MonoBehaviour
                 Object.Destroy(g, MaxTimer);
             }
 
+
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
-            canRotate = true;
+            transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridDirection) - 270);
+
+            if (!canRotate) canRotate = true;
+
         }
     }
 
@@ -510,17 +468,16 @@ public class SnakeQL : MonoBehaviour
         if (collision.gameObject.tag == "Food")
         {
             eat = true;
-            reward = reward + 100;
-            Debug.Log("Ate apple");
+            reward = reward + 25;
             Destroy(collision.gameObject);
-            food.GetComponent<Food>().SpawnFood(snakesize);
+            food.GetComponent<FoodQL>().SpawnFood(snakesize);
             GameController.instance.SnakeAte();
             GameController.instance.SingleGame(true);
         }
         else
         {
             dead = true;
-            reward = reward-25;
+            reward = reward - 25;
             GameController.instance.SingleGame(false);
 
         }

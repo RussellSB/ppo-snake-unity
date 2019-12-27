@@ -611,6 +611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 1637253837}
+  singleScore: {fileID: 0}
+  iteration: {fileID: 0}
   gameover: {fileID: 0}
   gameOver: 0
 --- !u!4 &532484488
@@ -729,7 +731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -340}
+  m_AnchoredPosition: {x: 0, y: -337}
   m_SizeDelta: {x: 107.3, y: 31.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691676696
@@ -822,7 +824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -268}
+  m_AnchoredPosition: {x: 0, y: -272}
   m_SizeDelta: {x: 107.3, y: 31.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &697658868
@@ -922,7 +924,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 6, y: -403}
+  m_AnchoredPosition: {x: 6, y: -392.9}
   m_SizeDelta: {x: 107.3, y: 31.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &878539675
@@ -1115,7 +1117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1840714150
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1412,6 +1414,21 @@ PrefabInstance:
     - target: {fileID: 329899765266723186, guid: 6fd2b44b6c327f949b046f222289d241,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 329899765266723188, guid: 6fd2b44b6c327f949b046f222289d241,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 329899765266723188, guid: 6fd2b44b6c327f949b046f222289d241,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 329899765266723188, guid: 6fd2b44b6c327f949b046f222289d241,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 329899765266723189, guid: 6fd2b44b6c327f949b046f222289d241,
@@ -1810,6 +1827,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6601879389376792973, guid: 921e80bc69fc36143b6d958a996e6264,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 921e80bc69fc36143b6d958a996e6264, type: 3}
 --- !u!1001 &8664378236719252587
@@ -1904,6 +1926,12 @@ PrefabInstance:
       propertyPath: wall
       value: 
       objectReference: {fileID: 2062061998}
+    - target: {fileID: 8664378237043738143, guid: 71f03c0be6a18a148a0b3b21c8f7594a,
+        type: 3}
+      propertyPath: food
+      value: 
+      objectReference: {fileID: 5261442182308492319, guid: eaf14193e5c8dd4409ace29751975f9c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71f03c0be6a18a148a0b3b21c8f7594a, type: 3}
 --- !u!1001 &9186214364056332577

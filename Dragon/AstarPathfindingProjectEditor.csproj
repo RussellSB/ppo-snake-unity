@@ -292,6 +292,18 @@
     <Reference Include="Pathfinding.Ionic.Zip.Reduced">
       <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Assets/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Abstractions">
+      <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Assets/MLAgentsSDK/Assets/ML-Agents/Plugins/System.IO.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Abstractions.TestingHelpers">
+      <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Assets/MLAgentsSDK/Assets/ML-Agents/Plugins/System.IO.Abstractions.TestingHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Assets/MLAgentsSDK/Assets/ML-Agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Assets/MLAgentsSDK/Assets/ML-Agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -303,6 +315,12 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="Barracuda">
+      <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Library/PackageCache/com.unity.barracuda@0.3.2-preview/Barracuda/Barracuda.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Library/PackageCache/com.unity.barracuda@0.3.2-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>

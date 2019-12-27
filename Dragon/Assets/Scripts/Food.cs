@@ -14,7 +14,7 @@ public class Food : MonoBehaviour
     public BoxCollider2D wall;
 
 
-    public void SpawnFood(List<Vector2Int> list)
+    public GameObject SpawnFood(List<Vector2Int> list)
     {
         Vector2Int element = new Vector2Int();
         int x, y;
@@ -33,7 +33,7 @@ public class Food : MonoBehaviour
 
         } while (list.IndexOf(element) != -1  | check == true);
 
-        Instantiate(food, new Vector2(x, y), Quaternion.identity);
+        return Instantiate(food, new Vector2(x, y), Quaternion.identity);
     }
 
 

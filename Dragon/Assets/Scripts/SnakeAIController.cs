@@ -5,168 +5,129 @@ using System.Linq;
 
 public class SnakeAIController : MonoBehaviour
 {
-    private Vector2 gridPosition;
-    private Vector2 gridDirection;
+    private Vector2Int gridPosition;
+    private Vector2Int gridDirection;
 
     public GameObject food;
     public GameObject tailPrefab;
 
-    List<Vector2> tail;
-    List<int> tailRotation; //Used in congruence to tail (0 - down, 1 - left, 2 - right, 3 - up)
-    List<Vector2> snakesize;
-    
+    List<Vector2Int> tail;
+    List<int> tailRotation; //Used in congruence to tail (0 - up, 1 - down, 2 - right, 3 - left)
+    List<Vector2Int> snakesize;
+
     private int snakebodysize = 0;
     bool eat;
     bool dead;
+    int headRotationCode = 1; // (0 - up, 1 - down, 2 - right, 3 - left)
+    int headRotationCode_PREV; // (0 - up, 1 - down, 2 - right, 3 - left)
 
-    private float Timer;
+    //private float Timer;
     private float MaxTimer;
-    private float ExecutionTimer;
+    //private float ExecutionTimer;
 
     public bool isUp = false;
     public bool isDown = true;
     public bool isLeft = false;
     public bool isRight = false;
 
-    int headRotationCode = 1; // (0 - up, 1 - down, 2 - right, 3 - left)
-    int headRotationCode_PREV; // (0 - up, 1 - down, 2 - right, 3 - left)
+    bool canRotate = true;
 
     private void Awake()
     {
-        gridPosition = new Vector2(0, 0);
-        gridDirection = new Vector2(0, -1);
-        MaxTimer = 0.1f;
-        Timer = MaxTimer;
+        gridPosition = new Vector2Int(0, 0);
+        gridDirection = new Vector2Int(0, -1);
 
-        tail = new List<Vector2>();
+        MaxTimer = 0.1f;
+        //Timer = MaxTimer;
+        //ExecutionTimer = 0;
+
+        tail = new List<Vector2Int>();
         tailRotation = new List<int>();
         snakebodysize = 0;
 
         snakesize = GetFullSnake();
-        //food.GetComponent<Food>().SpawnFood(snakesize);
-    }
-
-    private void Start()
-    {
-        InvokeRepeating("snakeUpdate", 0f, 0.1f);
-    }
-
-    void snakeUpdate()
-    {
-        if (!dead)
-        {
-            UserInput();
-            Movement();
-        }
+        food.GetComponent<Food>().SpawnFood(snakesize);
+        InvokeRepeating("UpdateSnake", 0f, 0.1f);
     }
 
     // Update is called once per frame
-    void Update()
+    void UpdateSnake()
     {
+        //ExecutionTimer = ExecutionTimer + Time.deltaTime;M
+
+        //if (ExecutionTimer > MaxTimer)
+        //{
+            if (!dead)
+            {
+                if (canRotate)
+                {
+                    UserInput();
+                }
+
+                Movement2();
+            }
+        //}
     }
 
     private void UserInput()
-    {    
+    {
         if (isUp)
         {
             if (gridDirection.x != 0 && gridDirection.y != -1)
             {
-                SpriteRotation(0);
                 gridDirection.x = 0;
                 gridDirection.y = 1;
             }
+            canRotate = false;
         }
         if (isDown)
         {
             if (gridDirection.x != 0 && gridDirection.y != 1)
             {
-                SpriteRotation(1);
                 gridDirection.x = 0;
                 gridDirection.y = -1;
             }
+            canRotate = false;
         }
         if (isRight)
         {
             if (gridDirection.x != -1 && gridDirection.y != 0)
             {
-                SpriteRotation(2);
                 gridDirection.x = 1;
                 gridDirection.y = 0;
             }
+            canRotate = false;
         }
+
         if (isLeft)
         {
             if (gridDirection.x != 1 && gridDirection.y != 0)
             {
-                SpriteRotation(3);
                 gridDirection.x = -1;
                 gridDirection.y = 0;
             }
+            canRotate = false;
         }
     }
 
-    private void SpriteRotation(int r)
+    private float GetAngleFromVector(Vector2Int dir)
     {
-        if(r == 0)
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0)
         {
-            if(gridDirection.x == 1)
-            {
-                RotateRight();
-            }else if(gridDirection.x == -1)
-            {
-                RotateLeft();
-            }
-        }else if (r == 1)
-        {
-            if (gridDirection.x == 1)
-            {
-                RotateLeft();
-            }
-            else if (gridDirection.x == -1)
-            {
-                RotateRight();
-            }
-        }else if (r == 2)
-        {
-            if (gridDirection.y == 1)
-            {
-                RotateLeft();
-            }
-            else if (gridDirection.y == -1)
-            {
-                RotateRight();
-            }
-        }else
-        {
-            if (gridDirection.y == 1)
-            {
-                RotateRight();
-            }
-            else if (gridDirection.y == -1)
-            {
-                RotateLeft();
-            }
+            n += 360;
         }
+
+        return n;
     }
 
-    private void RotateLeft()
+    private void Movement2()
     {
-        transform.Rotate(Vector3.forward * -90);
-    }
-
-    private void RotateRight()
-    {
-        transform.Rotate(Vector3.forward * 90);
-    }
-
-    private void Movement()
-    {
-        //Timer = Timer + Time.deltaTime;
-        //UserInput();
+        //Timer += Time.deltaTime;
 
         //if (Timer >= MaxTimer)
         //{
-            //Timer = Timer - MaxTimer;
+           //Timer -= MaxTimer;
             tail.Insert(0, gridPosition);
 
             headRotationCode_PREV = headRotationCode;
@@ -181,7 +142,7 @@ public class SnakeAIController : MonoBehaviour
                 tailRotation.Insert(0, headRotationCode);
             }
 
-            gridPosition = gridPosition + gridDirection;
+            gridPosition += gridDirection;
 
             if (eat)
             {
@@ -197,11 +158,11 @@ public class SnakeAIController : MonoBehaviour
 
             for (int i = 0; i < tail.Count; i++)
             {
-                Vector2 snakePosition = tail[i];
+                Vector2Int snakePosition = tail[i];
                 int rotation = tailRotation[i];
                 Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
 
-                GameObject g = (GameObject)Instantiate(tailPrefab, p , Quaternion.identity);
+                GameObject g = (GameObject)Instantiate(tailPrefab, p, Quaternion.identity);
                 GameObject childStraight = g.transform.Find("Straight").gameObject;
                 GameObject childCorner1 = g.transform.Find("Corner1").gameObject;
                 GameObject childCorner2 = g.transform.Find("Corner2").gameObject;
@@ -211,57 +172,45 @@ public class SnakeAIController : MonoBehaviour
                 switch (rotation)
                 {
                     case 0:
-                        //Debug.Log("Up");
                         break;
                     case 1:
-                        //Debug.Log("Down");
                         break;
                     case 2:
-                        //Debug.Log("Right");
                         g.GetComponent<Transform>().Rotate(Vector3.forward * 90);
                         break;
                     case 3:
-                        //Debug.Log("Left");
                         g.GetComponent<Transform>().Rotate(Vector3.forward * -90);
                         break;
                     case 4:
-                        //Debug.Log("Upright");
                         childStraight.SetActive(false);
                         childCorner3.SetActive(true);
                         break;
                     case 5:
-                        //Debug.Log("Upleft");
                         childStraight.SetActive(false);
                         childCorner4.SetActive(true);
                         break;
                     case 6:
-                        //Debug.Log("Downright");
                         childStraight.SetActive(false);
                         childCorner1.SetActive(true);
                         break;
                     case 7:
-                        //Debug.Log("Downleft");
                         childStraight.SetActive(false);
                         childCorner2.SetActive(true);
                         break;
                     case 8:
-                        //Debug.Log("Rightup");
                         childStraight.SetActive(false);
                         childCorner2.SetActive(true);
                         break;
                     case 9:
-                        //Debug.Log("Rightdown");
                         childStraight.SetActive(false);
                         childCorner4.SetActive(true);
                         break;
                     case 10:
-                        //Debug.Log("Leftup");
                         childStraight.SetActive(false);
                         childCorner1.SetActive(true);
-                        //
+
                         break;
                     case 11:
-                        //Debug.Log("Leftdown");
                         childStraight.SetActive(false);
                         childCorner3.SetActive(true);
                         break;
@@ -271,6 +220,9 @@ public class SnakeAIController : MonoBehaviour
             }
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
+            transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridDirection) - 270);
+
+            if (!canRotate) canRotate = true;
             AstarPath.active.Scan(); //Update scan
         //}
     }
@@ -299,28 +251,31 @@ public class SnakeAIController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name.StartsWith("Apple"))
+        if (collision.gameObject.tag == "Food")
         {
             eat = true;
+            Debug.Log("eat: " + collision.gameObject.name);
             Destroy(collision.gameObject);
+            food.GetComponent<Food>().SpawnFood(snakesize);
             GameController.instance.SnakeAte();
-
             snakesize = GetFullSnake();
-            //food.GetComponent<Food>().SpawnFood(snakesize);
 
         }
         else
         {
+            Debug.Log("dead: " + collision.gameObject.name);
+            Debug.Log(transform.position);
+            Debug.Log(collision.gameObject.transform.position);
             dead = true;
             GameController.instance.GameEnd();
-        }        
+        }
     }
 
-    public List<Vector2> GetFullSnake()
+    public List<Vector2Int> GetFullSnake()
     {
-        List<Vector2> list = new List<Vector2>() { gridPosition };
+        List<Vector2Int> list = new List<Vector2Int>() { gridPosition };
         list.AddRange(tail);
         return list;
     }
-  
+
 }

@@ -24,7 +24,8 @@ public class SnakeAStarAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         controller = GetComponent<SnakeAIController>();
         start = new Vector3(transform.position.x, transform.position.y, transform.position.z); //for offsets if desired
-        InvokeRepeating("UpdatePath", 0f, 0.025f);
+        InvokeRepeating("UpdatePath", 0f, 0.0025f);
+        InvokeRepeating("UpdateBrain", 0f, 0.000025f);
     }
 
     void UpdatePath()
@@ -47,9 +48,9 @@ public class SnakeAStarAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void UpdateBrain()
     {
-
+        //UpdatePath();
         if (path == null) return; // If we don't have a path yet do nothing
         start = new Vector3(transform.position.x, transform.position.y, transform.position.z); //for offsets if desired
 
@@ -84,6 +85,7 @@ public class SnakeAStarAI : MonoBehaviour
         // Direction to the next waypoint
         Vector2 dir = (path.vectorPath[currentWaypoint] - start).normalized;
         movementSignal(dir);
+        
     }
 
     void movementSignal(Vector2 direction)
