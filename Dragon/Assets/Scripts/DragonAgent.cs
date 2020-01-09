@@ -16,10 +16,10 @@ public class DragonAgent : Agent
     private GameObject food;
     public GameObject tailPrefab;
 
-    private Vector2Int gridPosition;
+    public Vector2Int gridPosition;
     private Vector2 globalGridPos;
-    private Vector2Int gridDirection;
-    private Vector2 targetPos;
+    public Vector2Int gridDirection;
+    public Vector2 targetPos;
 
     List<Vector2> tail;
     List<int> tailRotation;
@@ -35,6 +35,11 @@ public class DragonAgent : Agent
     private float MaxTimer;
     private float ExecutionTimer;
 
+    public GameObject prevG;
+    public List<GameObject> bodyParts;
+
+    public bool isVisual = true;
+
     /*****************************************************/
     /* 0 -----> Up
      * 1 -----> Down
@@ -49,6 +54,8 @@ public class DragonAgent : Agent
         initPos = new Vector2Int((int)transform.localPosition.x, (int)transform.localPosition.y);
         globInitPos = new Vector2(transform.position.x, transform.position.y);
         SnakeInit();
+
+        bodyParts = new List<GameObject>();
     }
 
     private void SnakeInit()
@@ -60,7 +67,7 @@ public class DragonAgent : Agent
         globalGridPos = globInitPos;
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.05f; // 0.025f
+        MaxTimer = 0.1f; // 0.07f //0.0025f
         Timer = MaxTimer;
         ExecutionTimer = 0;
 
@@ -79,17 +86,18 @@ public class DragonAgent : Agent
     {
         if (food) GameObject.Destroy(food);
         food = foodHandler.GetComponent<FoodML>().SpawnFood(snakesize);
-        targetPos = GameObject.FindWithTag("Food").transform.localPosition; // locates new flame
+        food.transform.parent = transform.parent;
+        targetPos = food.transform.localPosition; // locates new flame
     }
 
     void FixedUpdate()
     {
         if (dead) return;
 
-        if (canRotate)
-        {
-            RequestDecision();
-        }
+        //if (canRotate)
+        //{
+            
+        //}
 
         Movement();
         CheckWithinBorders();
@@ -127,6 +135,7 @@ public class DragonAgent : Agent
         if (Timer >= MaxTimer)
         {
             Timer -= MaxTimer;
+            
             tail.Insert(0, globalGridPos); // gridPosition
 
             headRotationCode_PREV = headRotationCode;
@@ -150,13 +159,26 @@ public class DragonAgent : Agent
                 tailRotation.RemoveAt(tailRotation.Count - 1);
             }
 
+           //prevG = null;
+
             for (int i = 0; i < tail.Count; i++)
             {
                 Vector2 snakePosition = tail[i];
                 int rotation = tailRotation[i];
                 Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
 
+                // if (prevG!=null) Destroy(prevG);  // destroy tail
+                if (tail.Count > 0)
+                {
+                    GameObject tailObject = bodyParts[tail.Count - 1];
+                    Destroy(tailObject);
+                    bodyParts.RemoveAt(tail.Count - 1);
+                }
+                //Destroy(bodyParts[bodyParts.Count - 1]);
                 GameObject g = (GameObject)Instantiate(tailPrefab, p, Quaternion.identity);
+                bodyParts.Add(g);
+                g.transform.parent = transform.parent;
+
                 GameObject childStraight = g.transform.Find("Straight").gameObject;
                 GameObject childCorner1 = g.transform.Find("Corner1").gameObject;
                 GameObject childCorner2 = g.transform.Find("Corner2").gameObject;
@@ -209,13 +231,18 @@ public class DragonAgent : Agent
                         break;
                 }
 
-                Object.Destroy(g, MaxTimer);
+                //Object.Destroy(g, MaxTimer);
+                
+                // add to game object list here
+
             }
 
             transform.localPosition = new Vector3(gridPosition.x, gridPosition.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridDirection) - 270);
 
-            if (!canRotate) canRotate = true;
+            //if (!canRotate) canRotate = true;
+            RequestDecision();
+            //AddReward(-0.01f); // Negative reward with every movement
         }
     }
 
@@ -245,14 +272,15 @@ public class DragonAgent : Agent
     {
         if (collision.gameObject.tag == "Food")
         {
-            SetReward(1f);
-            Done();
             newFood();
             snakebodysize++;
             snakesize = GetFullSnake();
+            SetReward(1f);
+            Done();
         }
         else
         {
+            
             dead = true;
             //SetReward(-0.5f);
             Done();
@@ -272,6 +300,7 @@ public class DragonAgent : Agent
     {
         if (dead)
         {
+            //ResetReward();
             SnakeInit();
         }
     }
@@ -285,22 +314,40 @@ public class DragonAgent : Agent
         //AddVectorObs(rightBorder.localPosition.x);
         //AddVectorObs(leftBorder.localPosition.x);
 
-        // Target and Agent positions (2)
-        AddVectorObs(Vector2.Distance(targetPos, new Vector2(gridPosition.x, gridPosition.y)));
+        // Target and Agent positions (4)
+        //AddVectorObs(Vector2.Distance(targetPos, new Vector2(gridPosition.x, gridPosition.y)));
+        // ==AddVectorObs(targetPos);
+        // ==AddVectorObs(new Vector2(gridPosition.x, gridPosition.y));
 
         // Agent direction and length (2)
-        AddVectorObs((float)gridDirection.x);
-        AddVectorObs((float)gridDirection.y);
+        // ==AddVectorObs((float)gridDirection.x);
+        // ==AddVectorObs((float)gridDirection.y);
         //AddVectorObs((float)snakebodysize);
         //*/
 
         // There are no numeric observations to collect as this environment uses visual
         // observations.
+
+        if (!isVisual)
+        {
+            AddVectorObs(targetPos);
+            AddVectorObs(new Vector2(gridPosition.x, gridPosition.y));
+            AddVectorObs((float)gridDirection.x);
+            AddVectorObs((float)gridDirection.y);
+
+            AddVectorObs(topBorder.localPosition.y);
+            AddVectorObs(bottomBorder.localPosition.y);
+            AddVectorObs(rightBorder.localPosition.x);
+            AddVectorObs(leftBorder.localPosition.x);
+
+            // 10
+        }
     }
 
     public override void AgentAction(float[] vectorAction)
     {
         var input = Mathf.FloorToInt(vectorAction[0]); // Get index action for movement input
+        //AddReward(-0.01f);
 
         switch (input)
         {

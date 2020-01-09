@@ -24,14 +24,15 @@ public class FoodML : MonoBehaviour
 
         do
         {
-            x = (int)Random.Range(leftBorder.position.x+1, rightBorder.position.x-1);
-            y = (int)Random.Range(bottomBorder.position.y+1, topBorder.position.y-1);
+            x = (int)Random.Range(leftBorder.position.x+1, rightBorder.position.x-4);
+            y = (int)Random.Range(bottomBorder.position.y+1, topBorder.position.y-4);
             element.x = x;
             element.y = y;
 
             check = CheckWalls(wallpts, x, y);
 
         } while (list.IndexOf(element) != -1  | check == true);
+
 
         return Instantiate(food, new Vector2(x, y), Quaternion.identity);
     }
