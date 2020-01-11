@@ -37,8 +37,12 @@ public class DragonAgent : Agent
 
     public GameObject prevG;
     public List<GameObject> bodyParts;
+    public GameObject test;
 
     public bool isVisual = true;
+
+    public bool activated1 = false;
+    public bool activated2 = false;
 
     /*****************************************************/
     /* 0 -----> Up
@@ -67,7 +71,7 @@ public class DragonAgent : Agent
         globalGridPos = globInitPos;
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.1f; // 0.07f //0.0025f
+        MaxTimer = 0.2f; // 0.07f //0.0025f
         Timer = MaxTimer;
         ExecutionTimer = 0;
 
@@ -134,8 +138,23 @@ public class DragonAgent : Agent
         Timer += Time.deltaTime;
         if (Timer >= MaxTimer)
         {
-            Timer -= MaxTimer;
+            //if(bodyParts.Count > 0)
+            //{
+            //   Destroy(bodyParts[bodyParts.Count - 1]);
+            //} 
+
+            //if (activated1)
+            //{
+            //    Debug.Log("Access");
+            //    //Destroy(prevG);
+            //    Debug.Log(bodyParts.Count);
+           //     Destroy(bodyParts[bodyParts.Count - 1]);
+           //     bodyParts.Clear(); // Clears the array for filling
+            //    bodyParts = new List<GameObject>();
+            //    activated1 = false;
+           // }
             
+            Timer -= MaxTimer;
             tail.Insert(0, globalGridPos); // gridPosition
 
             headRotationCode_PREV = headRotationCode;
@@ -153,14 +172,21 @@ public class DragonAgent : Agent
             gridPosition += gridDirection;
             globalGridPos += gridDirection;
 
-            if (tail.Count >= snakebodysize + 1)
+            if (tail.Count > snakebodysize)
             {
                 tail.RemoveAt(tail.Count - 1);
                 tailRotation.RemoveAt(tailRotation.Count - 1);
             }
+            
+            Debug.Log(tail.Count + "," + snakebodysize);
 
-           //prevG = null;
+            //if(bodyParts.Count >= snakebodysize + 1)
+            //{
+            //  Destroy(bodyParts[bodyParts.Count - 1]);
+            //  bodyParts.RemoveAt(bodyParts.Count - 1);
+            //}
 
+            
             for (int i = 0; i < tail.Count; i++)
             {
                 Vector2 snakePosition = tail[i];
@@ -168,15 +194,16 @@ public class DragonAgent : Agent
                 Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
 
                 // if (prevG!=null) Destroy(prevG);  // destroy tail
-                if (tail.Count > 0)
-                {
-                    GameObject tailObject = bodyParts[tail.Count - 1];
-                    Destroy(tailObject);
-                    bodyParts.RemoveAt(tail.Count - 1);
-                }
+
+                //if (bodyParts.Count > 0)
+                //{
+                //   Destroy(bodyParts[0]);
+                // bodyParts.RemoveAt(0);
+                //}
+
                 //Destroy(bodyParts[bodyParts.Count - 1]);
+                if(prevG) Destroy(prevG);
                 GameObject g = (GameObject)Instantiate(tailPrefab, p, Quaternion.identity);
-                bodyParts.Add(g);
                 g.transform.parent = transform.parent;
 
                 GameObject childStraight = g.transform.Find("Straight").gameObject;
@@ -232,10 +259,16 @@ public class DragonAgent : Agent
                 }
 
                 //Object.Destroy(g, MaxTimer);
-                
                 // add to game object list here
-
+                //bodyParts.Add(g); // Fills the array
+                //test = g;
+                if (i == 0) prevG = g;
+                else prevG = null;
+                
+                //if(i == tail.Count - 1) activated1 = true;
             }
+            
+
 
             transform.localPosition = new Vector3(gridPosition.x, gridPosition.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridDirection) - 270);
