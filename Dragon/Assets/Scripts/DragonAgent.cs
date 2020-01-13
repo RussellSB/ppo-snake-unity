@@ -33,16 +33,10 @@ public class DragonAgent : Agent
 
     private float Timer;
     private float MaxTimer;
-    private float ExecutionTimer;
-
-    public GameObject prevG;
+    
     public List<GameObject> bodyParts;
-    public GameObject test;
 
     public bool isVisual = true;
-
-    public bool activated1 = false;
-    public bool activated2 = false;
 
     /*****************************************************/
     /* 0 -----> Up
@@ -58,7 +52,6 @@ public class DragonAgent : Agent
         initPos = new Vector2Int((int)transform.localPosition.x, (int)transform.localPosition.y);
         globInitPos = new Vector2(transform.position.x, transform.position.y);
         SnakeInit();
-
         bodyParts = new List<GameObject>();
     }
 
@@ -71,15 +64,15 @@ public class DragonAgent : Agent
         globalGridPos = globInitPos;
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.2f; // 0.07f //0.0025f
+        MaxTimer = 0f; // 0.07f //0.0025f
         Timer = MaxTimer;
-        ExecutionTimer = 0;
 
         tail = new List<Vector2>();
         tailRotation = new List<int>();
         snakebodysize = 0;
 
         snakesize = GetFullSnake();
+        refreshBody();
         newFood();
 
         canRotate = true;
@@ -97,11 +90,6 @@ public class DragonAgent : Agent
     void FixedUpdate()
     {
         if (dead) return;
-
-        //if (canRotate)
-        //{
-            
-        //}
 
         Movement();
         CheckWithinBorders();
@@ -138,22 +126,7 @@ public class DragonAgent : Agent
         Timer += Time.deltaTime;
         if (Timer >= MaxTimer)
         {
-            //if(bodyParts.Count > 0)
-            //{
-            //   Destroy(bodyParts[bodyParts.Count - 1]);
-            //} 
-
-            //if (activated1)
-            //{
-            //    Debug.Log("Access");
-            //    //Destroy(prevG);
-            //    Debug.Log(bodyParts.Count);
-           //     Destroy(bodyParts[bodyParts.Count - 1]);
-           //     bodyParts.Clear(); // Clears the array for filling
-            //    bodyParts = new List<GameObject>();
-            //    activated1 = false;
-           // }
-            
+            refreshBody();
             Timer -= MaxTimer;
             tail.Insert(0, globalGridPos); // gridPosition
 
@@ -178,31 +151,11 @@ public class DragonAgent : Agent
                 tailRotation.RemoveAt(tailRotation.Count - 1);
             }
             
-            Debug.Log(tail.Count + "," + snakebodysize);
-
-            //if(bodyParts.Count >= snakebodysize + 1)
-            //{
-            //  Destroy(bodyParts[bodyParts.Count - 1]);
-            //  bodyParts.RemoveAt(bodyParts.Count - 1);
-            //}
-
-            
             for (int i = 0; i < tail.Count; i++)
             {
                 Vector2 snakePosition = tail[i];
                 int rotation = tailRotation[i];
                 Vector3 p = new Vector3(snakePosition.x, snakePosition.y);
-
-                // if (prevG!=null) Destroy(prevG);  // destroy tail
-
-                //if (bodyParts.Count > 0)
-                //{
-                //   Destroy(bodyParts[0]);
-                // bodyParts.RemoveAt(0);
-                //}
-
-                //Destroy(bodyParts[bodyParts.Count - 1]);
-                if(prevG) Destroy(prevG);
                 GameObject g = (GameObject)Instantiate(tailPrefab, p, Quaternion.identity);
                 g.transform.parent = transform.parent;
 
@@ -257,15 +210,8 @@ public class DragonAgent : Agent
                         childCorner3.SetActive(true);
                         break;
                 }
-
-                //Object.Destroy(g, MaxTimer);
-                // add to game object list here
-                //bodyParts.Add(g); // Fills the array
-                //test = g;
-                if (i == 0) prevG = g;
-                else prevG = null;
                 
-                //if(i == tail.Count - 1) activated1 = true;
+                bodyParts.Add(g); // Fills the array
             }
             
 
@@ -315,8 +261,21 @@ public class DragonAgent : Agent
         {
             
             dead = true;
+            refreshBody();
             //SetReward(-0.5f);
             Done();
+        }
+    }
+
+    public void refreshBody()
+    {
+        if (snakebodysize > 0)
+        {
+            for (int i = bodyParts.Count - 1; i >= 0; i--)
+            {
+                Destroy(bodyParts[i]);
+            }
+            bodyParts.Clear();
         }
     }
 

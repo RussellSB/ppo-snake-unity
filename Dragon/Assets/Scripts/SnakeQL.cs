@@ -28,7 +28,8 @@ public class SnakeQL : MonoBehaviour
 
     private float Timer;
     private float MaxTimer;
-    private float ExecutionTimer;
+
+    public List<GameObject> bodyParts;
 
     Dictionary<string, float[]> qtable = new Dictionary<string, float[]>();
 
@@ -47,6 +48,7 @@ public class SnakeQL : MonoBehaviour
     private void Awake()
     {
         SnakeInit();
+        bodyParts = new List<GameObject>();
     }
 
     private void SnakeInit()
@@ -57,9 +59,8 @@ public class SnakeQL : MonoBehaviour
         gridPosition = new Vector2Int(x, y);
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.1f;
+        MaxTimer = 0f;
         Timer = MaxTimer;
-        ExecutionTimer = 0;
 
         tail = new List<Vector2Int>();
         tailRotation = new List<int>();
@@ -79,45 +80,41 @@ public class SnakeQL : MonoBehaviour
 
     void Update()
     {
-        ExecutionTimer = ExecutionTimer + Time.deltaTime;
-
-        if (ExecutionTimer > MaxTimer)
+        
+        if (!dead)
         {
-            if (!dead)
+            if (canRotate)
             {
-                if (canRotate)
-                {
-                    current_state = State();
-                    action = GetAction(current_state);
-                    AIInput(action);
-                }
-
-                Movement();
-
-                next_state = State();
-
-                UpdateTable(action, current_state, next_state);
-
-                if (gridPosition.x > rightBorder.transform.position.x || gridPosition.x < leftBorder.transform.position.x)
-                {
-                    dead = true;
-                }
-
-                if (gridPosition.y > topBorder.transform.position.y || gridPosition.y < bottomBorder.transform.position.y)
-                {
-                    dead = true;
-                }
-
-
+                current_state = State();
+                action = GetAction(current_state);
+                AIInput(action);
             }
 
-            else if (dead == true)
+            Movement();
+
+            next_state = State();
+
+            UpdateTable(action, current_state, next_state);
+
+            if (gridPosition.x > rightBorder.transform.position.x || gridPosition.x < leftBorder.transform.position.x)
             {
-                SnakeInit();
-                GameController.instance.Iteration();
-                UpdateEpilson();
-                dead = false;
+                dead = true;
             }
+
+            if (gridPosition.y > topBorder.transform.position.y || gridPosition.y < bottomBorder.transform.position.y)
+            {
+                dead = true;
+            }
+
+
+        }
+
+        else if (dead == true)
+        {
+            SnakeInit();
+            GameController.instance.Iteration();
+            UpdateEpilson();
+            dead = false;
         }
     }
 
@@ -338,9 +335,9 @@ public class SnakeQL : MonoBehaviour
     private void Movement()
     {
         Timer = Timer + Time.deltaTime;
-
         if (Timer >= MaxTimer)
         {
+            refreshBody();
             Timer = Timer - MaxTimer;
             tail.Insert(0, gridPosition);
 
@@ -429,7 +426,7 @@ public class SnakeQL : MonoBehaviour
                         break;
                 }
 
-                Object.Destroy(g, MaxTimer);
+                bodyParts.Add(g); // Fills the array
             }
 
 
@@ -438,6 +435,18 @@ public class SnakeQL : MonoBehaviour
 
             if (!canRotate) canRotate = true;
 
+        }
+    }
+
+    public void refreshBody()
+    {
+        if (snakebodysize > 0)
+        {
+            for (int i = bodyParts.Count - 1; i >= 0; i--)
+            {
+                Destroy(bodyParts[i]);
+            }
+            bodyParts.Clear();
         }
     }
 
@@ -471,15 +480,18 @@ public class SnakeQL : MonoBehaviour
             reward = reward + 25;
             Destroy(collision.gameObject);
             food.GetComponent<FoodQL>().SpawnFood(snakesize);
+            GameController.instance.Iteration(); // *Russell put this here* I think this could help Chantelle, lemmie know what you think
+            UpdateEpilson(); // *Russell put this here* I think this could help Chantelle, lemmie know what you think
             GameController.instance.SnakeAte();
             GameController.instance.SingleGame(true);
+            
         }
         else
         {
             dead = true;
             reward = reward - 25;
             GameController.instance.SingleGame(false);
-
+            refreshBody();
         }
     }
 

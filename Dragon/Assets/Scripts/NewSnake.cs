@@ -23,7 +23,8 @@ public class NewSnake : MonoBehaviour
 
     private float Timer;
     private float MaxTimer;
-    private float ExecutionTimer;
+
+    public List<GameObject> bodyParts;
 
     bool canRotate = true;
 
@@ -32,9 +33,8 @@ public class NewSnake : MonoBehaviour
         gridPosition = new Vector2Int(0, 0);
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.1f;
+        MaxTimer = 0.05f;
         Timer = MaxTimer;
-        ExecutionTimer = 0;
 
         tail = new List<Vector2Int>();
         tailRotation = new List<int>();
@@ -42,24 +42,21 @@ public class NewSnake : MonoBehaviour
 
         snakesize = GetFullSnake();
         food.GetComponent<Food>().SpawnFood(snakesize);
+
+        bodyParts = new List<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        ExecutionTimer = ExecutionTimer + Time.deltaTime;
-
-        if (ExecutionTimer > MaxTimer)
+        if (!dead)
         {
-            if (!dead)
+            if (canRotate)
             {
-                if (canRotate)
-                {
-                    UserInput();
-                }
-
-                Movement2();
+                UserInput();
             }
+
+            Movement();
         }
      }
 
@@ -115,12 +112,13 @@ public class NewSnake : MonoBehaviour
         return n;
     }
 
-    private void Movement2()
+    private void Movement()
     {
         Timer += Time.deltaTime;
 
         if (Timer >= MaxTimer)
         {
+            refreshBody();
             Timer -= MaxTimer;
             tail.Insert(0, gridPosition);
             
@@ -209,14 +207,25 @@ public class NewSnake : MonoBehaviour
                         childCorner3.SetActive(true);
                         break;
                 }
-
-                Object.Destroy(g, MaxTimer);
+                bodyParts.Add(g); // Fills the array
             }
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridDirection) - 270);
 
             if (!canRotate) canRotate = true;
+        }
+    }
+
+    public void refreshBody()
+    {
+        if (snakebodysize > 0)
+        {
+            for (int i = bodyParts.Count - 1; i >= 0; i--)
+            {
+                Destroy(bodyParts[i]);
+            }
+            bodyParts.Clear();
         }
     }
 
@@ -256,6 +265,7 @@ public class NewSnake : MonoBehaviour
         else
         {
             dead = true;
+            //refreshBody();
             GameController.instance.GameEnd();
         }
     }

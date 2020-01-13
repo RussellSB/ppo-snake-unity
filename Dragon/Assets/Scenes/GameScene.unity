@@ -177,6 +177,7 @@ MonoBehaviour:
   food: {fileID: 2111357553}
   tailPrefab: {fileID: 854037969978522545, guid: 70a0ace032df9a946b8a57c618e351a4,
     type: 3}
+  bodyParts: []
 --- !u!1001 &1743835855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -653,7 +654,7 @@ PrefabInstance:
     - target: {fileID: 7968512223241179590, guid: f0c92b12e0e7f1346baaba6bb1ffbffe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.99
+      value: 11.98
       objectReference: {fileID: 0}
     - target: {fileID: 7968512223241179590, guid: f0c92b12e0e7f1346baaba6bb1ffbffe,
         type: 3}
