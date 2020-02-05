@@ -33,7 +33,7 @@ public class NewSnake : MonoBehaviour
         gridPosition = new Vector2Int(0, 0);
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0.05f;
+        MaxTimer = 0.07f;
         Timer = MaxTimer;
 
         tail = new List<Vector2Int>();
@@ -260,12 +260,14 @@ public class NewSnake : MonoBehaviour
             food.GetComponent<Food>().SpawnFood(snakesize);
             GameController.instance.SnakeAte();
             snakesize = GetFullSnake();
+            GameObject.FindGameObjectWithTag("SFX").GetComponent<SFXManager>().PlaySound("Food");
 
         }
         else
         {
             dead = true;
             //refreshBody();
+            GameObject.FindGameObjectWithTag("SFX").GetComponent<SFXManager>().PlaySound("Death");
             GameController.instance.GameEnd();
         }
     }

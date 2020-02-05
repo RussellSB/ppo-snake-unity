@@ -12,6 +12,30 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene.unity
     guid: 738e2cec2e130b14b97fafa7af0c0935
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
+    path: Assets/Scenes/AStar.unity
     guid: ee0cb71f74dfd4042bbea72ea49b1bd2
+  - enabled: 1
+    path: Assets/Scenes/QLearningTrained.unity
+    guid: f5d1639a0742def46a9509b0b47263dd
+  - enabled: 1
+    path: Assets/Scenes/SARSA.unity
+    guid: c6adab17ee9da0a4a8f93ee476ddad3e
+  - enabled: 1
+    path: Assets/Scenes/ML-PPO-VECTOR.unity
+    guid: 7fce0a5d8bf22d8478cda56c666521aa
+  - enabled: 1
+    path: Assets/Scenes/ML-PPO-RAYCAST.unity
+    guid: c0c4e5059901d984e876e80579620ed1
+  - enabled: 1
+    path: Assets/Scenes/ML-PPO-RAYCAST 2.unity
+    guid: 1939f48fe809ebe47815c3e9c0378912
+  - enabled: 1
+    path: Assets/Scenes/ML-PPO-CNN.unity
+    guid: 495a82bae6cebd5409b8eeb03d5b6133
+  - enabled: 1
+    path: Assets/Scenes/SARSA2.unity
+    guid: c8bed7428741e364bb1b352cf047a329
+  - enabled: 1
+    path: Assets/Scenes/QLearning.unity
+    guid: e513695a877c2e94c977c1b34ac5099d
   m_configObjects: {}

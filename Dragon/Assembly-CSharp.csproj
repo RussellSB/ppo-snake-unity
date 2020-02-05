@@ -190,17 +190,22 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\NewSnake.cs" />
-    <Compile Include="Assets\Scripts\OldSnake.cs" />
-    <Compile Include="Assets\Scripts\OldSnakeQL.cs" />
+    <Compile Include="Assets\Scripts\QLSnake.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
+    <Compile Include="Assets\Scripts\SFXManager.cs" />
     <Compile Include="Assets\Scripts\SnakeAIController.cs" />
     <Compile Include="Assets\Scripts\SnakeAStarAI.cs" />
-    <Compile Include="Assets\Scripts\SnakeQL.cs" />
+    <Compile Include="Assets\Scripts\SnakeSARSA.cs" />
+    <Compile Include="Assets\Scripts\SnakeSARSA2.cs" />
+    <Compile Include="Assets\Scripts\Sound.cs" />
+    <Compile Include="Assets\Scripts\TrainedQL.cs" />
+    <Compile Include="Assets\Scripts\Watch.cs" />
     <None Include="Assets\MLAgentsSDK\Assets\ML-Agents\Examples\SharedAssets\Materials\ShaderRadialGrid.shader" />
     <None Include="Assets\MLAgentsSDK\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\MLAgentsSDK\Assets\ML-Agents\Examples\SharedAssets\Materials\GridPatternShader.shader" />
     <None Include="Assets\MLAgentsSDK\Assets\ML-Agents\Examples\SharedAssets\Materials\ShaderOutline.shader" />
     <None Include="Assets\MLAgentsSDK\Assets\ML-Agents\Plugins\ProtoBuffer\link.xml" />
+    <None Include="Assets\Resources\qtable.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Dragon/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -1,18 +1,32 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - DragonAcademy
+    - DragonAgent
     - Food
+    - FoodML
+    - FoodQL
     - GameController
+    - MLAgents.BehaviorParameters
+    - MLAgents.Sensor.CameraSensorComponent
     - Menu
+    - NewSnake
+    - QLSnake
+    - SFXManager
     - Settings
-    - Snake
     - SnakeAIController
     - SnakeAStarAI
+    - SnakeSARSA
+    - SnakeSARSA2
+    - TrainedQL
+    - Watch
     AstarPathfindingProject.dll:
     - AstarPath
     - Pathfinding.AIDestinationSetter
     - Pathfinding.AILerp
     - Pathfinding.Seeker
+    Barracuda.dll:
+    - Barracuda.NNModel
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
@@ -33,6 +47,93 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   sceneClasses:
+    Assets/Scenes/AStar.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10142}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10554}
+    - Class: 114
+      Script: {instanceID: 10560}
+    - Class: 114
+      Script: {instanceID: 10754}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 11030}
+    - Class: 114
+      Script: {instanceID: 11058}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11678}
+    - Class: 114
+      Script: {instanceID: 11758}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 114
+      Script: {instanceID: 12294}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
     Assets/Scenes/GameScene.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -65,27 +166,349 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9744}
+      Script: {instanceID: 9776}
     - Class: 114
-      Script: {instanceID: 9928}
+      Script: {instanceID: 9978}
     - Class: 114
-      Script: {instanceID: 9968}
+      Script: {instanceID: 10024}
     - Class: 114
-      Script: {instanceID: 10050}
+      Script: {instanceID: 10448}
     - Class: 114
-      Script: {instanceID: 10348}
+      Script: {instanceID: 10560}
     - Class: 114
-      Script: {instanceID: 10444}
+      Script: {instanceID: 10760}
     - Class: 114
-      Script: {instanceID: 10624}
+      Script: {instanceID: 10776}
     - Class: 114
-      Script: {instanceID: 10892}
+      Script: {instanceID: 11100}
     - Class: 114
-      Script: {instanceID: 11470}
+      Script: {instanceID: 11758}
     - Class: 114
-      Script: {instanceID: 11480}
+      Script: {instanceID: 11768}
     - Class: 114
-      Script: {instanceID: 11934}
+      Script: {instanceID: 12212}
+    - Class: 114
+      Script: {instanceID: 12294}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/ML-PPO-CNN.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10468}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 10788}
+    - Class: 114
+      Script: {instanceID: 10906}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11380}
+    - Class: 114
+      Script: {instanceID: 11532}
+    - Class: 114
+      Script: {instanceID: 11744}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/ML-PPO-RAYCAST 2.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10468}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 10788}
+    - Class: 114
+      Script: {instanceID: 10906}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11380}
+    - Class: 114
+      Script: {instanceID: 11532}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/ML-PPO-RAYCAST.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10468}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 10788}
+    - Class: 114
+      Script: {instanceID: 10906}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11380}
+    - Class: 114
+      Script: {instanceID: 11532}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/ML-PPO-VECTOR.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10468}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 10788}
+    - Class: 114
+      Script: {instanceID: 10906}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11380}
+    - Class: 114
+      Script: {instanceID: 11532}
+    - Class: 114
+      Script: {instanceID: 11758}
+    - Class: 114
+      Script: {instanceID: 11768}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -121,32 +544,46 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 72
+      Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
+    - Class: 109
+      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9744}
+      Script: {instanceID: 9776}
     - Class: 114
-      Script: {instanceID: 9928}
+      Script: {instanceID: 9978}
     - Class: 114
-      Script: {instanceID: 9968}
+      Script: {instanceID: 10024}
     - Class: 114
-      Script: {instanceID: 10348}
+      Script: {instanceID: 10448}
     - Class: 114
-      Script: {instanceID: 10444}
+      Script: {instanceID: 10466}
     - Class: 114
-      Script: {instanceID: 10892}
+      Script: {instanceID: 10560}
     - Class: 114
-      Script: {instanceID: 11480}
+      Script: {instanceID: 10760}
     - Class: 114
-      Script: {instanceID: 11482}
+      Script: {instanceID: 11100}
     - Class: 114
-      Script: {instanceID: 11884}
+      Script: {instanceID: 11768}
     - Class: 114
-      Script: {instanceID: 11934}
+      Script: {instanceID: 11770}
     - Class: 114
-      Script: {instanceID: 11968}
+      Script: {instanceID: 12240}
+    - Class: 114
+      Script: {instanceID: 12294}
+    - Class: 114
+      Script: {instanceID: 12330}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -167,7 +604,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 245
       Script: {instanceID: 0}
-    Assets/Scenes/Tutorial.unity:
+    Assets/Scenes/QLearning.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -199,37 +636,260 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9744}
+      Script: {instanceID: 9776}
     - Class: 114
-      Script: {instanceID: 9928}
+      Script: {instanceID: 9978}
     - Class: 114
-      Script: {instanceID: 9968}
+      Script: {instanceID: 10024}
     - Class: 114
-      Script: {instanceID: 10072}
+      Script: {instanceID: 10448}
     - Class: 114
-      Script: {instanceID: 10348}
+      Script: {instanceID: 10520}
     - Class: 114
-      Script: {instanceID: 10438}
+      Script: {instanceID: 10560}
     - Class: 114
-      Script: {instanceID: 10444}
+      Script: {instanceID: 10760}
     - Class: 114
-      Script: {instanceID: 10606}
+      Script: {instanceID: 10776}
     - Class: 114
-      Script: {instanceID: 10624}
+      Script: {instanceID: 11100}
     - Class: 114
-      Script: {instanceID: 10830}
+      Script: {instanceID: 11276}
     - Class: 114
-      Script: {instanceID: 10852}
+      Script: {instanceID: 11768}
     - Class: 114
-      Script: {instanceID: 10892}
+      Script: {instanceID: 12294}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/QLearningTrained.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11396}
+      Script: {instanceID: 9776}
     - Class: 114
-      Script: {instanceID: 11470}
+      Script: {instanceID: 9978}
     - Class: 114
-      Script: {instanceID: 11480}
+      Script: {instanceID: 10024}
     - Class: 114
-      Script: {instanceID: 11934}
+      Script: {instanceID: 10192}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10520}
+    - Class: 114
+      Script: {instanceID: 10560}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 114
+      Script: {instanceID: 12294}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/SARSA.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10520}
+    - Class: 114
+      Script: {instanceID: 10560}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10770}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 114
+      Script: {instanceID: 12294}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 241
+      Script: {instanceID: 0}
+    - Class: 243
+      Script: {instanceID: 0}
+    - Class: 245
+      Script: {instanceID: 0}
+    Assets/Scenes/SARSA2.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9776}
+    - Class: 114
+      Script: {instanceID: 9978}
+    - Class: 114
+      Script: {instanceID: 10024}
+    - Class: 114
+      Script: {instanceID: 10448}
+    - Class: 114
+      Script: {instanceID: 10520}
+    - Class: 114
+      Script: {instanceID: 10560}
+    - Class: 114
+      Script: {instanceID: 10760}
+    - Class: 114
+      Script: {instanceID: 10776}
+    - Class: 114
+      Script: {instanceID: 11020}
+    - Class: 114
+      Script: {instanceID: 11100}
+    - Class: 114
+      Script: {instanceID: 11768}
+    - Class: 114
+      Script: {instanceID: 12294}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -285,16 +945,40 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CrawlerAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: e39fce190aae542d4b73a5eb5fa44097
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TennisAgent
+  - hash:
+      serializedVersion: 2
       Hash: 482b4788a1650225af3664f1486faf28
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding.Examples
     className: ObjectPlacer
   - hash:
       serializedVersion: 2
+      Hash: bd5e949bb3077173b9674c3b889ef8fb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SoccerFieldArea
+  - hash:
+      serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 8717dc35db89dcad114287b2d32b2b30
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Ball3DHardAgent
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -313,6 +997,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Text
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: Monitor
   - hash:
       serializedVersion: 2
       Hash: 499fd23433e68e265d153aa6b95d0047
@@ -357,22 +1047,34 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
+      Hash: 3600a7137801de4d814ac19d90c9cf61
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GridAcademy
+  - hash:
+      serializedVersion: 2
       Hash: 7ab0e790220bdca831fdd886b339039d
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: d1d0eb98b81567efd496a356b4e5868f
+      Hash: f39cdb9a6439fa3025504809312010c1
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Snake
+    namespaceName: MLAgents.Sensor
+    className: RayPerceptionSensorComponent2D
   - hash:
       serializedVersion: 2
       Hash: e023a9abbafdaa051082465af67e0a0e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SnakeAStarAI
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BouncerTarget
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -399,10 +1101,28 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
+      Hash: b975bccfa12701dac55e077f5b528464
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TrainedQL
+  - hash:
+      serializedVersion: 2
+      Hash: 2792ff68c75c2cfed05354f5418129d0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PushAgentBasic
+  - hash:
+      serializedVersion: 2
       Hash: a5a60d0b9e6d53d72e12aef88e23ee68
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding
     className: FunnelModifier
+  - hash:
+      serializedVersion: 2
+      Hash: 2dda85804a497e203d4f7a3fc5ade55f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FoodCollectorAcademy
   - hash:
       serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
@@ -435,10 +1155,28 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Ball3DAcademy
+  - hash:
+      serializedVersion: 2
       Hash: 5ab533713adae59372fb3e10a585c186
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: e9d2f8500708590342d7db8857c1d9f6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: DemonstrationRecorder
+  - hash:
+      serializedVersion: 2
+      Hash: 43a305cd1f9367c99edb33fc39365eac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GridAgent
   - hash:
       serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
@@ -451,6 +1189,42 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Watch
+  - hash:
+      serializedVersion: 2
+      Hash: 6b270256c010dbabe30a17c5694b414d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FoodML
+  - hash:
+      serializedVersion: 2
+      Hash: 49d97688ed585835fa69d7d60df639f1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents.Sensor
+    className: RenderTextureSensorComponent
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: RayPerception3D
+  - hash:
+      serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WalkerAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: d18569df643be3f9f91dbe70c5a4df79
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FoodQL
   - hash:
       serializedVersion: 2
       Hash: 303ad70ce203ad874efe2965d0fbcff9
@@ -489,10 +1263,28 @@ ScriptsOnlyBuild:
     className: NodeLink
   - hash:
       serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ReacherAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: a1ec435616f7033c362e5fbfe41492c7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PyramidArea
+  - hash:
+      serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAsset
+  - hash:
+      serializedVersion: 2
+      Hash: b1a500449f4ef21f31d1802f6b38e368
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: TargetContact
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -501,10 +1293,40 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
+      Hash: 4378e1f3f3d1ab5b2b7462ca8cfa270b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FoodCollectorAgent
+  - hash:
+      serializedVersion: 2
       Hash: 8dc90e648ac06f43bdd31ac9fa8f4579
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
+  - hash:
+      serializedVersion: 2
+      Hash: e02729d655cb2eae1abc4a4f7a37af8d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GridArea
+  - hash:
+      serializedVersion: 2
+      Hash: f0e000711d33fa53609561155bf634a7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WallJumpAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 0be044d599f931ccffe2534904e3e625
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SoccerBallController
+  - hash:
+      serializedVersion: 2
+      Hash: 8e5750ad10b0567929995a0473923807
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HitWall
   - hash:
       serializedVersion: 2
       Hash: 427e4ae6223362877cde7ac01baa97c3
@@ -519,16 +1341,40 @@ ScriptsOnlyBuild:
     className: AstarPath
   - hash:
       serializedVersion: 2
-      Hash: 83f7e496f45812d56ccf8c89d3db1fc9
+      Hash: 66056c2209ff8e6b238f8b056c7eb331
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SFXManager
+  - hash:
+      serializedVersion: 2
+      Hash: b975bccfa12701dac55e077f5b528464
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SnakeSARSA
+  - hash:
+      serializedVersion: 2
+      Hash: b4283cd0beca7dfa49c71bb244441ac7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameController
+  - hash:
+      serializedVersion: 2
+      Hash: 422f48e4fe97392f35c9dde63be9e292
+    assemblyName: Barracuda.dll
+    namespaceName: Barracuda
+    className: NNModel
   - hash:
       serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Asset
+  - hash:
+      serializedVersion: 2
+      Hash: 5cca31c99362907d3791789e3bb2ff73
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: FlyCamera
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -544,15 +1390,57 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: RayPerception2D
+  - hash:
+      serializedVersion: 2
+      Hash: 2c08607c1101e626cd81f05d9f9b0e78
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PyramidAgent
+  - hash:
+      serializedVersion: 2
+      Hash: a0346448dc5af23a12db4296f1501b3c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DragonAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 9e056b0fc331916ca7b6c27b1af13309
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: GroundContact
+  - hash:
+      serializedVersion: 2
+      Hash: 04cd7ed3328044b7109e490ee7fed6cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents.Sensor
+    className: RayPerceptionSensorComponent3D
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Analytics.Editor.dll
     namespaceName: UnityEditor.Analytics
     className: AnalyticsEventTrackerEditor
+  - hash:
+      serializedVersion: 2
+      Hash: ee945fbca932a40ae48ea633f04e82d0
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PyramidSwitch
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAnimator
+  - hash:
+      serializedVersion: 2
+      Hash: 068ff82543ed4ab4f3b68427e387c53f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BasicAgent
   - hash:
       serializedVersion: 2
       Hash: e59b4ddbf539212f3d2f911f95cc1bb3
@@ -573,6 +1461,12 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
+      Hash: b975bccfa12701dac55e077f5b528464
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SnakeSARSA2
+  - hash:
+      serializedVersion: 2
       Hash: ca571164a3afdfc0d8fe458dee7b703d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -583,6 +1477,12 @@ ScriptsOnlyBuild:
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding
     className: AlternativePath
+  - hash:
+      serializedVersion: 2
+      Hash: 9461e48e3269d23a169bc9d05f5e57fa
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FoodLogic
   - hash:
       serializedVersion: 2
       Hash: 3dd5460199f4f71ddeb16f492607b8fb
@@ -609,16 +1509,58 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: 78e9466979745cbb0c3eb144aaae58ea
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GoalDetect
+  - hash:
+      serializedVersion: 2
+      Hash: bc5fd78999d40f78b7901b0a75e2909f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BouncerAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TennisAcademy
+  - hash:
+      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: edf33a72b50389138077cfc4c11a817a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QLSnake
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: Area
+  - hash:
+      serializedVersion: 2
       Hash: e7af7273c8177a5779551d022b323d84
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding
     className: RaycastModifier
+  - hash:
+      serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TemplateAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: 13ae4c39071cd274704b45dfee4f3e81
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CrawlerAgent
   - hash:
       serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
@@ -639,6 +1581,12 @@ ScriptsOnlyBuild:
     className: MineBotAnimation
   - hash:
       serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DragonAcademy
+  - hash:
+      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -649,6 +1597,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
+  - hash:
+      serializedVersion: 2
+      Hash: e591bbaab6a99a496adc9d7bae660e76
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TennisArea
+  - hash:
+      serializedVersion: 2
+      Hash: daa22d492844ac390848f8b228ee26df
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HallwayAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: 0d0cea5d0cfcd48abf8179302ff26d3c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FoodCollectorArea
   - hash:
       serializedVersion: 2
       Hash: e1300922cc039f41ab46a47f4cb05898
@@ -681,10 +1647,34 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: a88fbe2f94c30dcef4adbd404f77d60a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: BehaviorParameters
+  - hash:
+      serializedVersion: 2
+      Hash: b4828230e39c16cd8bc06489c3dc44d2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: JointDriveController
+  - hash:
+      serializedVersion: 2
       Hash: 66c061c17549c495f74c9dcc30aaaab2
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding.Examples
     className: MineBotAI
+  - hash:
+      serializedVersion: 2
+      Hash: 9fa13260f7efac5f05aa9fe84c73a5fb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SoccerAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: AdjustTrainingTimescale
   - hash:
       serializedVersion: 2
       Hash: 8abe5c5970b933d28c84fe29c2232578
@@ -735,6 +1725,18 @@ ScriptsOnlyBuild:
     className: DataPrivacyButton
   - hash:
       serializedVersion: 2
+      Hash: 26a17c6af43d5515ec4470f622c5624c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BouncerAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 01833c81aef8d9451f93cf0fe6d9f034
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents.Sensor
+    className: CameraSensorComponent
+  - hash:
+      serializedVersion: 2
       Hash: f336e086360abe49a3323e5f1583c35a
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -765,6 +1767,18 @@ ScriptsOnlyBuild:
     className: Settings
   - hash:
       serializedVersion: 2
+      Hash: 2249013e3c3ce7af5a097fb8e102fbd5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ReacherGoal
+  - hash:
+      serializedVersion: 2
+      Hash: ac1679b22c4b7a0ce52f85de9d79e69f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: Demonstration
+  - hash:
+      serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
@@ -777,10 +1791,34 @@ ScriptsOnlyBuild:
     className: BlockManager
   - hash:
       serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PyramidAcademy
+  - hash:
+      serializedVersion: 2
       Hash: 427e4ae6223362877cde7ac01baa97c3
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding
     className: NodeLink3
+  - hash:
+      serializedVersion: 2
+      Hash: 0d85f4fda1e0e70cd92c084d12f05cdc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: CameraFollow
+  - hash:
+      serializedVersion: 2
+      Hash: 36218ae36261c02a817ae4de827c29cc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BasicAcademy
+  - hash:
+      serializedVersion: 2
+      Hash: f077c96ca9aeff31f636bb5bfa712b27
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PushBlockAcademy
   - hash:
       serializedVersion: 2
       Hash: 2fde15209800c4e94cf99bcad8981a24
@@ -801,6 +1839,12 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: MLAgents
+    className: Startup
+  - hash:
+      serializedVersion: 2
       Hash: 0aab9b0491f3a88d6459f7add40022e4
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding.Legacy
@@ -817,6 +1861,12 @@ ScriptsOnlyBuild:
     assemblyName: AstarPathfindingProject.dll
     namespaceName: Pathfinding
     className: AnimationLink
+  - hash:
+      serializedVersion: 2
+      Hash: da8a984ffce92625ff8131783747b950
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ReacherAgent
   - hash:
       serializedVersion: 2
       Hash: df434544c9f7b33d1cc7e635b180d279
@@ -849,6 +1899,18 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
+      Hash: 21fa2f04f9163712e31951077ae5ff7e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HallwayAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 636f1cfe37a24135255f7a3b46193604
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NewSnake
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -865,6 +1927,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: EventTrigger
+  - hash:
+      serializedVersion: 2
+      Hash: eadd7ba0b1eb00812a6ee422dd0b97be
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WallJumpAcademy
   - hash:
       serializedVersion: 2
       Hash: 8649814970b42d345b89944b862453cc
@@ -891,6 +1959,12 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
+      Hash: 2cd442c742bc06681f4c6abfd13ad35d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WalkerAgent
+  - hash:
+      serializedVersion: 2
       Hash: aa88ae22474df55295327e4ee99e5a24
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -909,16 +1983,28 @@ ScriptsOnlyBuild:
     className: Slider
   - hash:
       serializedVersion: 2
+      Hash: 08c186fc1ba4e98590175b1190ab19a6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TemplateAgent
+  - hash:
+      serializedVersion: 2
+      Hash: 8717dc35db89dcad114287b2d32b2b30
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Ball3DAgent
+  - hash:
+      serializedVersion: 2
       Hash: 0fd6822f6177297bd0eb4d83cc7a9030
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ToggleGroup
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 5b0f94c8c30592889475f84023c1c6f2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: UpdateGraph
+    className: AgentSoccer
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -929,5 +2015,13 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/GameScene.unity
-  - Assets/Scenes/Tutorial.unity
-  playerPath: C:/Users/USER/Desktop/Snake.exe
+  - Assets/Scenes/AStar.unity
+  - Assets/Scenes/QLearningTrained.unity
+  - Assets/Scenes/SARSA.unity
+  - Assets/Scenes/ML-PPO-VECTOR.unity
+  - Assets/Scenes/ML-PPO-RAYCAST.unity
+  - Assets/Scenes/ML-PPO-RAYCAST 2.unity
+  - Assets/Scenes/ML-PPO-CNN.unity
+  - Assets/Scenes/SARSA2.unity
+  - Assets/Scenes/QLearning.unity
+  playerPath: D:/Artificial Intellige (BSc.)/3rd Year/1st Semester/gameAI/advanced/ass/Snakes/Build/Snake.exe

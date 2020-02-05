@@ -65,9 +65,9 @@ public class FoodML : MonoBehaviour
     {
         bool check = false;
        
-        if (y <= wallpts[0].y  & y >= wallpts[2].y)
+        if (y <= wallpts[0].y + 2  & y >= wallpts[2].y - 2)
         {
-            if (x >= wallpts[0].x & x <= wallpts[1].x)
+            if (x >= wallpts[0].x - 2 & x <= wallpts[1].x + 2)
             {
                 check = true;
             }            

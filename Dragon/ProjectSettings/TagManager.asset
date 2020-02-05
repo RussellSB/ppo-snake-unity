@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Food
   - Border
+  - Obstacle
+  - SFX
   layers:
   - Default
   - TransparentFX
@@ -19,9 +21,9 @@ TagManager:
   - 
   - Background
   - Obstacle
-  - 
-  - 
-  - 
+  - Player
+  - Food
+  - Tail
   - 
   - 
   - 

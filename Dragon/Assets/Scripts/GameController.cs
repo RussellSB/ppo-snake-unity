@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
 
     protected bool pause = false;
 
-    private int s = 0;
+    public int s = 0;
     private int s1 = 0;
     private int i = 0;
 

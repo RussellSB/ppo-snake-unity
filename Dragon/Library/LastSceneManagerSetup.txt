@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/ML-PPO-V.unity
+- path: Assets/Scenes/QLearning.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

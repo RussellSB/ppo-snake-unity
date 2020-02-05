@@ -59,11 +59,6 @@ public class SnakeAIController : MonoBehaviour
         //{
             if (!dead)
             {
-                if (canRotate)
-                {
-                    UserInput();
-                }
-
                 Movement2();
             }
         //}
@@ -221,8 +216,8 @@ public class SnakeAIController : MonoBehaviour
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridDirection) - 270);
-
-            if (!canRotate) canRotate = true;
+        
+            UserInput();
             AstarPath.active.Scan(); //Update scan
         //}
     }
@@ -253,6 +248,7 @@ public class SnakeAIController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Food")
         {
+            GameObject.FindGameObjectWithTag("SFX").GetComponent<SFXManager>().PlaySound("Food");
             eat = true;
             Debug.Log("eat: " + collision.gameObject.name);
             Destroy(collision.gameObject);
@@ -263,6 +259,7 @@ public class SnakeAIController : MonoBehaviour
         }
         else
         {
+            GameObject.FindGameObjectWithTag("SFX").GetComponent<SFXManager>().PlaySound("Death");
             Debug.Log("dead: " + collision.gameObject.name);
             Debug.Log(transform.position);
             Debug.Log(collision.gameObject.transform.position);

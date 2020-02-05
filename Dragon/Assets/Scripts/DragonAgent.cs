@@ -26,7 +26,6 @@ public class DragonAgent : Agent
     List<Vector2> snakesize;
 
     public bool dead;
-    public bool canRotate;
     private int snakebodysize;
     private int headRotationCode;
     private int headRotationCode_PREV;
@@ -36,7 +35,10 @@ public class DragonAgent : Agent
     
     public List<GameObject> bodyParts;
 
-    public bool isVisual = true;
+    public bool observeVectors = true;
+    public bool vectorWalls = true;
+    public bool observeRays = false;
+    public bool observeRaysOnly = false;
 
     /*****************************************************/
     /* 0 -----> Up
@@ -64,7 +66,7 @@ public class DragonAgent : Agent
         globalGridPos = globInitPos;
         gridDirection = new Vector2Int(0, -1);
 
-        MaxTimer = 0f; // 0.07f //0.0025f
+        MaxTimer = 0.06f; // 0.07f //0.0025f
         Timer = MaxTimer;
 
         tail = new List<Vector2>();
@@ -74,8 +76,7 @@ public class DragonAgent : Agent
         snakesize = GetFullSnake();
         refreshBody();
         newFood();
-
-        canRotate = true;
+        
         dead = false;
     }
 
@@ -251,19 +252,29 @@ public class DragonAgent : Agent
     {
         if (collision.gameObject.tag == "Food")
         {
+            GameObject.FindGameObjectWithTag("SFX").GetComponent<SFXManager>().PlaySound("Food");
             newFood();
             snakebodysize++;
+            GameController.instance.SnakeAte();
             snakesize = GetFullSnake();
-            SetReward(1f);
-            Done();
+
+            if (!observeRays)
+            {
+                SetReward(1f);
+                Done();
+            }
+            else
+            {
+                AddReward(1); // Accumulate and don't end
+            }
         }
         else
         {
-            
+            GameObject.FindGameObjectWithTag("SFX").GetComponent<SFXManager>().PlaySound("Death");
             dead = true;
+            GameController.instance.s = 0;
+            Done(); // No point in neg reward if it dies ... (just finish ep)
             refreshBody();
-            //SetReward(-0.5f);
-            Done();
         }
     }
 
@@ -299,40 +310,184 @@ public class DragonAgent : Agent
 
     public override void CollectObservations()
     {
-        /* FIRST ATTEMPT: No convergance from this....*/
-        // Border positions (0)
-        //AddVectorObs(topBorder.localPosition.y);
-        //AddVectorObs(bottomBorder.localPosition.y);
-        //AddVectorObs(rightBorder.localPosition.x);
-        //AddVectorObs(leftBorder.localPosition.x);
-
-        // Target and Agent positions (4)
-        //AddVectorObs(Vector2.Distance(targetPos, new Vector2(gridPosition.x, gridPosition.y)));
-        // ==AddVectorObs(targetPos);
-        // ==AddVectorObs(new Vector2(gridPosition.x, gridPosition.y));
-
-        // Agent direction and length (2)
-        // ==AddVectorObs((float)gridDirection.x);
-        // ==AddVectorObs((float)gridDirection.y);
-        //AddVectorObs((float)snakebodysize);
-        //*/
-
-        // There are no numeric observations to collect as this environment uses visual
-        // observations.
-
-        if (!isVisual)
+        if (observeVectors)
         {
             AddVectorObs(targetPos);
             AddVectorObs(new Vector2(gridPosition.x, gridPosition.y));
             AddVectorObs((float)gridDirection.x);
             AddVectorObs((float)gridDirection.y);
 
-            AddVectorObs(topBorder.localPosition.y);
-            AddVectorObs(bottomBorder.localPosition.y);
-            AddVectorObs(rightBorder.localPosition.x);
-            AddVectorObs(leftBorder.localPosition.x);
+            if (vectorWalls)
+            {
+                AddVectorObs(topBorder.localPosition.y);
+                AddVectorObs(bottomBorder.localPosition.y);
+                AddVectorObs(rightBorder.localPosition.x);
+                AddVectorObs(leftBorder.localPosition.x);
 
-            // 10
+                // 10
+            }
+            // 6
+        }
+
+        if (observeRays)
+        {
+            Vector2 origin = transform.position;
+            LayerMask layerMask = LayerMask.GetMask("Obstacle");
+            int rayLength = 30;
+
+            RaycastHit2D hitFront = Physics2D.Raycast(origin, -transform.up, rayLength, layerMask);
+            RaycastHit2D hitLeft = Physics2D.Raycast(origin, -transform.right, rayLength, layerMask);
+            RaycastHit2D hitRight = Physics2D.Raycast(origin, transform.right, rayLength, layerMask);
+
+            // Forward observation
+            if (hitFront.collider != null)
+            {
+                //Debug.Log(hitFront.collider.gameObject.name);
+                //Debug.Log(hitFront.distance/rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, -transform.up * hitFront.distance, Color.red);
+                AddVectorObs(1 - hitFront.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // Left observation
+            if (hitLeft.collider != null)
+            {
+                //Debug.Log(hitLeft.collider.gameObject.name);
+                //Debug.Log(hitLeft.distance / rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, -transform.right * hitLeft.distance, Color.red);
+                AddVectorObs(1 - hitLeft.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // Right observation
+            if (hitRight.collider != null)
+            {
+                //Debug.Log(hitRight.collider.gameObject.name);
+                //Debug.Log(hitRight.distance/rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, transform.right * hitRight.distance, Color.red);
+                AddVectorObs(1 - hitRight.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+            //3
+        }
+
+        if (observeRaysOnly) // boolean style (purely from the agents perspective)
+        {
+            // Added to for direction (comment if model below raycast14)
+            AddVectorObs((float)gridDirection.x);
+            AddVectorObs((float)gridDirection.y);
+
+            Vector2 origin = transform.position;
+            LayerMask layerMask = LayerMask.GetMask("Obstacle", "Tail");
+            LayerMask layerMask2 = LayerMask.GetMask("Food", "Obstacle");
+            int rayLength = 30;
+
+            RaycastHit2D hitFront = Physics2D.Raycast(origin, -transform.up, rayLength, layerMask);
+            RaycastHit2D hitLeft = Physics2D.Raycast(origin, -transform.right, rayLength, layerMask);
+            RaycastHit2D hitRight = Physics2D.Raycast(origin, transform.right, rayLength, layerMask);
+
+            RaycastHit2D hitFront2 = Physics2D.Raycast(origin, -transform.up, rayLength, layerMask2);
+            RaycastHit2D hitLeft2 = Physics2D.Raycast(origin, -transform.right, rayLength, layerMask2);
+            RaycastHit2D hitRight2 = Physics2D.Raycast(origin, transform.right, rayLength, layerMask2);
+
+            // Forward observation
+            if (hitFront.collider != null)
+            {
+                //Debug.Log(hitFront.collider.gameObject.name);
+                //Debug.Log(hitFront.distance/rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, -transform.up * hitFront.distance, Color.red);
+                AddVectorObs(1 - hitFront.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // Left observation
+            if (hitLeft.collider != null)
+            {
+                //Debug.Log(hitLeft.collider.gameObject.name);
+                //Debug.Log(hitLeft.distance / rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, -transform.right * hitLeft.distance, Color.red);
+                AddVectorObs(1 - hitLeft.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // Right observation
+            if (hitRight.collider != null)
+            {
+                //Debug.Log(hitRight.collider.gameObject.name);
+                //Debug.Log(hitRight.distance/rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, transform.right * hitRight.distance, Color.red);
+                AddVectorObs(1 - hitRight.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // =====================================================================================
+
+            // Forward observation 2
+            if (hitFront2.collider != null && hitFront2.collider.gameObject.layer == 11)
+            {
+                //Debug.Log(hitFront.collider.gameObject.name);
+                //Debug.Log(hitFront.distance/rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, -transform.up * hitFront2.distance, Color.green);
+                AddVectorObs(1 - hitFront2.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // Left observation 2
+            if (hitLeft2.collider != null &&  hitLeft2.collider.gameObject.layer == 11)
+            {
+                //Debug.Log(hitLeft.collider.gameObject.name);
+                //Debug.Log(hitLeft.distance / rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, -transform.right * hitLeft2.distance, Color.green);
+                AddVectorObs(1 - hitLeft2.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+
+            // Right observation 2
+            if (hitRight2.collider != null &&  hitRight2.collider.gameObject.layer == 11)
+            {
+                //Debug.Log(hitRight.collider.gameObject.name);
+                //Debug.Log(hitRight.distance/rayLength);
+                //Debug.Log("===========");
+                Debug.DrawRay(origin, transform.right * hitRight2.distance, Color.green);
+                AddVectorObs(1 - hitRight2.distance / rayLength);
+            }
+            else
+            {
+                AddVectorObs(0); //Out of sight
+            }
+            // 8
         }
     }
 
@@ -349,7 +504,6 @@ public class DragonAgent : Agent
                     gridDirection.x = 0;
                     gridDirection.y = 1;
                 }
-                canRotate = false;
                 break;
 
             case 1:
@@ -366,7 +520,6 @@ public class DragonAgent : Agent
                     gridDirection.x = 1;
                     gridDirection.y = 0;
                 }
-                canRotate = false;
                 break;
 
             case 3:
@@ -375,7 +528,6 @@ public class DragonAgent : Agent
                     gridDirection.x = -1;
                     gridDirection.y = 0;
                 }
-                canRotate = false;
                 break;
             case 4:
                 // Do nothing
